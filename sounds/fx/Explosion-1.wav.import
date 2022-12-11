@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/Laser-Shoot-3.wav-3a2c10bf64e5203775303d465d217445.sample"
+path="res://.import/Explosion-1.wav-d37a675c92da0c95407cea2a52da2549.sample"
 
 [deps]
 
-source_file="res://sounds/fx/Laser-Shoot-3.wav"
-dest_files=[ "res://.import/Laser-Shoot-3.wav-3a2c10bf64e5203775303d465d217445.sample" ]
+source_file="res://sounds/fx/Explosion-1.wav"
+dest_files=[ "res://.import/Explosion-1.wav-d37a675c92da0c95407cea2a52da2549.sample" ]
 
 [params]
 

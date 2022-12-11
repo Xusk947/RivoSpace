@@ -15,6 +15,7 @@ var added:bool # Called when cause spawn() function
 func _ready():
 	needy = 0
 	added = false
+	modulate.a = 0
 	if card:
 		texture_rect.texture = card.texture
 		name_label.text = card.name
@@ -28,6 +29,7 @@ func _ready():
 	Events.connect("card_begin_selected", self, "_begin_select") # Start Disappear Animation
 
 func _process(delta):
+	if not added: return
 	if can_move:
 		rect_position = rect_position.linear_interpolate(Vector2(rect_position.x, needy), 0.01)
 		if needy == rect_position.y:
@@ -42,35 +44,41 @@ func select():
 	Events.emit_signal("card_begin_selected", self)
 
 func _begin_select(card_holder:CardHolder):
+	if not added: return
+	if anim.current_animation == "spawn": return
 	if card_holder == self:
 		anim.play("selected")
+		GameManager.play_sound(Res.card_apply)
 		needy = 1000
 		can_move = true
 	else:
 		anim.play("unselected")
-		print("Unselected")
 
 func end_select():
 	Events.emit_signal("card_selected", card)
 	Res.erase_card(card)
 
 func _pressed_down():
+	if not added: return
 	if anim.current_animation == "selected": return
 	if anim.current_animation == "unselected": return
 	if anim.current_animation == "spawn": return
 	anim.play("selected")
 # Touch outside the button
 func _mouse_exited():
+	if not added: return
 	if anim.current_animation == "selected": return
 	if anim.current_animation == "unselected": return
 	if anim.current_animation == "spawn": return
 	anim.play_backwards("hover")
 # Touch in Button
 func _mouse_entered():
+	if not added: return
 	if anim.current_animation == "selected": return
 	if anim.current_animation == "unselected": return
 	if anim.current_animation == "spawn": return
 	anim.play("hover")
+	GameManager.play_sound(Res.card_select)
 # Set pivot in Centre of all rect
 func _repair_pivot():
 	rect_pivot_offset = rect_size * rect_scale / 2

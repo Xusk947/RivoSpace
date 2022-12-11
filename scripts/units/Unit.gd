@@ -145,6 +145,7 @@ func kill():
 	fx.add()
 	if controller:
 		controller.on_kill()
+	GameManager.play_sound(Res.unit_death_fx[rand_range(0, len(Res.unit_death_fx))])
 	remove()
 
 func remove():

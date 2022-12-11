@@ -14,7 +14,7 @@ onready var card_holder:HBoxContainer = $CanvasLayer/Menu/MainContainer/UpgradeC
 # --- EXPIRIANCE --- 
 var expiriance_level:int # Current Level
 var expiriance_progress:float # How many Exp points Players has
-var expiriance_max_progress:float = 100 # Exp points to new level
+var expiriance_max_progress:float = 25 # Exp points to new level
 signal level_up(current_level) # Sends signal when expiriance reach max level
 # --- CARDS ---
 var card_to_spawn:Array = []
@@ -44,20 +44,18 @@ func set_child_process(proc:bool):
 ## Optionally check if expiriance > max expiriance => level up
 func add_expiriance(amount:float):
 	expiriance_progress += amount
+	Events.emit_signal("expiriance_gained", { 
+		expiriance = expiriance_progress,
+	})
 	if expiriance_progress >= expiriance_max_progress:
-		expiriance_max_progress *= 1.2
-		expiriance_progress = expiriance_max_progress - expiriance_progress
+		expiriance_progress = expiriance_progress - expiriance_max_progress
 		expiriance_level += 1
-		Events.emit_signal("level_up", {level = expiriance_level})
+		expiriance_max_progress *= 1.2
+		Events.emit_signal("level_up", {level = expiriance_level, max_expiriance = expiriance_max_progress, current_expiriance = expiriance_progress})
 		set_child_process(false)
 		_spawn_cards()
-	Events.emit_signal("expiriance_gained", { 
-		expiriance = expiriance_progress + amount,
-		max_expiriance = expiriance_max_progress
-	})
 
 func _on_card_select(card):
-	print("FUCK YOU TONY")
 	GameManager.add_card(card, Res.team_alien)
 	_remove_cards()
 	set_child_process(true)
@@ -71,7 +69,6 @@ func _get_wave():
 func _process(_delta):
 	if len(card_to_spawn) > 0:
 		var card:CardHolder = card_to_spawn[0]
-		print(card.modulate.a)
 		if card.modulate.a == 0:
 			card.spawn(1)
 		if card.modulate.a > 0.69:
@@ -108,6 +105,9 @@ func _spawn_cards():
 # Remove All CardHolders when player select card
 func _remove_cards():
 	for child in card_holder.get_children():
+		if child is CardHolder:
+			child.anim.stop()
+			child.modulate.a = 1
 		card_holder.remove_child(child)
 		
 	_update_game_ui(true)

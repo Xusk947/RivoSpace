@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Card-Apply.wav-7e42f9462308c711216d0de752e1fb83.sample"
+
+[deps]
+
+source_file="res://sounds/fx/Card-Apply.wav"
+dest_files=[ "res://.import/Card-Apply.wav-7e42f9462308c711216d0de752e1fb83.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

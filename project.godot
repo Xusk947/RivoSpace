@@ -89,6 +89,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/units/Unit.gd"
 }, {
+"base": "AudioStreamPlayer2D",
+"class": "VFX",
+"language": "GDScript",
+"path": "res://scripts/entities/VFX.gd"
+}, {
 "base": "Node2D",
 "class": "VanishingText",
 "language": "GDScript",
@@ -121,6 +126,7 @@ _global_script_class_icons={
 "Player": "",
 "SceneHolder": "",
 "Unit": "",
+"VFX": "",
 "VanishingText": "",
 "Weapon": "",
 "WeaponType": ""

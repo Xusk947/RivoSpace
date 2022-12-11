@@ -81,6 +81,13 @@ func add_card(card:Card, team:Color):
 	get_card(team).add(card)
 	selected_cards.append(card)
 
+func play_sound(audio:AudioStream, position:Vector2 = Vector2.ZERO):
+	var stream:VFX = Pool.take_node(Res.VFX)
+	add_child(stream)
+	stream.stream = audio
+	stream.position = position
+	
+	stream.play()
 func get_card(team:Color) -> Card: 
 	if cards.has(team.to_html(false)):
 		print("Return Existed Card:", cards[team.to_html(false)])

@@ -10,3 +10,4 @@ export var shoot_cone:float = 15
 export var one_shot:bool = true
 export(String, FILE, "*.tscn") var bullet:String
 export var texture:Texture
+export(Array, AudioStream) var shoot_sounds

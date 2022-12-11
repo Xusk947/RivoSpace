@@ -17,7 +17,6 @@ func _ready():
 		_timer.connect("timeout", self, "_timer_up")
 		_timer.autostart = true
 		add_child(_timer)
-		
 
 func _process(delta):
 	if unit:
@@ -30,6 +29,8 @@ func _timer_up():
 	if unit.can_shoot && unit.target:
 		for i in (type.shots + unit.card.bullet_adding):
 			_shoot(type.shoot_cone + unit.card.weapon_shoot_cone_adding)
+		if len(type.shoot_sounds) > 0:
+			GameManager.play_sound(type.shoot_sounds[rand_range(0, len(type.shoot_sounds))], unit.position)
 
 func _shoot(angle:float = 0):
 	var bullet:Bullet = Pool.take_node(type.bullet)

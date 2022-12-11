@@ -60,13 +60,11 @@ func _ready():
 	dir.list_dir_begin()
 	while true:
 		var file = dir.get_next()
-		print("File:",file)
 		if file == "":
 			break
 		elif not file.begins_with("."):
-			if file == "basic-card.tres":
-				print("FUCK YOU")
-			else:
+			# Not Add Basic Card to Tree
+			if not file == "basic-card.tres":
 				var path = "res://content/cards/" + file
 				all_cards.append(load(path))
 	dir.list_dir_end()

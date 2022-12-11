@@ -9,7 +9,7 @@ static func forward_distance(angle1:float, angle2:float) -> float:
 
 static func backward_distance(angle1:float, angle2:float) -> float:
 	return PI2 - Mathf.abs(angle1 - angle2)
-
+# Return distance between Angles in Radians
 static func angle_dist(a:float, b:float) -> float:
 	a = Mathf.mod(a, PI2)
 	b = Mathf.mod(b, PI2)
@@ -27,7 +27,7 @@ static func angle_dist(a:float, b:float) -> float:
 			b = b - a + PI2
 	
 	return Mathf.min(a, b)
-
+# Move Angle to Another Angle with given speed
 static func move_toward(angle1:float, to1:float, speed:float) -> float:
 	if(abs(angle_dist(angle1, to1)) < speed): return to1
 	var angle = Mathf.mod(angle1, PI2)

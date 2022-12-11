@@ -8,12 +8,11 @@ const BULLETS_LOAD_AMOUNT:int = 800
 
 func _ready():
 	GameManager.boot_scene = self
-	# Create basic cards
+	# Create Base Cards for Teams
 	GameManager.get_card(Res.team_alien)
-	print("Team Alien Created")
 	GameManager.get_card(Res.team_enemy)
-	print("Team Enemy Created")
 	# Load Object to Pool
+	# TODO: Make it easier to read, like add load_units(), load_fx()
 	Pool.load_object(Res.hit_fx, FX_LOAD_AMOUNT)
 	Pool.load_object(Res.death_fx, FX_LOAD_AMOUNT)
 	Pool.load_object(Res.unit, UNIT_LOAD_AMOUNT)

@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/entities/Exp.gd"
 }, {
+"base": "ProgressBar",
+"class": "ExpBar",
+"language": "GDScript",
+"path": "res://scripts/ui/ExpBar.gd"
+}, {
 "base": "Camera2D",
 "class": "FollowingCamera2D",
 "language": "GDScript",
@@ -119,6 +124,7 @@ _global_script_class_icons={
 "Controller": "",
 "Enemy": "",
 "Exp": "",
+"ExpBar": "",
 "FollowingCamera2D": "",
 "Fx": "",
 "GameScene": "",

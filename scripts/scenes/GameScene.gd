@@ -47,19 +47,20 @@ func add_expiriance(amount:float):
 	Events.emit_signal("expiriance_gained", { 
 		expiriance = expiriance_progress,
 	})
+	# When EXP reach maximum level we level up and spawn cards, multiple max_expiriance by 1.2 
 	if expiriance_progress >= expiriance_max_progress:
 		expiriance_progress = expiriance_progress - expiriance_max_progress
 		expiriance_level += 1
 		expiriance_max_progress *= 1.2
 		Events.emit_signal("level_up", {level = expiriance_level, max_expiriance = expiriance_max_progress, current_expiriance = expiriance_progress})
-		set_child_process(false)
+		set_child_process(false) # Stop all Node2D on Scene
 		_spawn_cards()
-
+# When Player select Card, and all cards animation is done, we remove all cards and resume game
 func _on_card_select(card):
 	GameManager.add_card(card, Res.team_alien)
 	_remove_cards()
 	set_child_process(true)
-
+# TODO: Move Add WaveSpawner.gd
 func spawn_wave():
 	var wave = _get_wave()
 
@@ -67,12 +68,15 @@ func _get_wave():
 	pass
 
 func _process(_delta):
+	# When Player Start Selecting Cards, Spawn card with some delay
 	if len(card_to_spawn) > 0:
 		var card:CardHolder = card_to_spawn[0]
 		if card.modulate.a == 0:
 			card.spawn(1)
 		if card.modulate.a > 0.69:
 			card_to_spawn.erase(card)
+			
+	# DEBUG ONLY
 	if not game_control.visible: return
 	if Input.is_mouse_button_pressed(1):
 		var unit = _spawn_unit(get_global_mouse_position(), Res.sharp)
@@ -97,7 +101,7 @@ func _spawn_unit(pos:Vector2, unit_folder:String = Res.unit):
 func _spawn_cards():
 	for i in 3:
 		var card:CardHolder = _get_card()
-		card.modulate.a = 0
+		card.modulate.a = 0 # Set alpha to 0, and call spawn animation, alpha automaticly move to 0.7
 		card_holder.add_child(card)
 		card_to_spawn.append(card)
 		

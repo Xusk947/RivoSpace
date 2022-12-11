@@ -14,22 +14,26 @@ var piercing:int = 0
 var _initialized:bool = false
 
 func _ready():
+	# Set our living time to Type.lifetime
 	_time = type.lifetime
-	Debug.set("bullets", Debug.get("bullets") + 1)
 	if _initialized: return
 	if type is BulletType:
+		# Set Texture of BulletType
 		$Sprite.texture = type.texture
 		# Automaticlly Set Collision Shape for sprites
 		#var shape = $Area2D/CollisionShape2D.shape
 		#if shape is RectangleShape2D:
 		#	shape.extents = Vector2(type.texture.get_width() * $Sprite.scale.x, type.texture.get_height() * $Sprite.scale.y)
+		# Copy speed for future changes
 		_speed = type.speed
 		$Area2D.connect("body_shape_entered", self, "_collision")
 	_initialized = true
+
 func _collision(_rid:RID, body:Node, body_shape_idx, _local_shape_idx):
 	if (body is PhysicsBody2D):
 		var owner:Node2D = body.shape_owner_get_owner(body_shape_idx)
 		var parent = owner.get_parent()
+		# Check collision Object is Unit
 		if (parent is Unit):
 			if not (parent.team == unit.team):
 				parent.apply_damage(type.damage * damage_multiplayer)
@@ -49,11 +53,13 @@ func _collision(_rid:RID, body:Node, body_shape_idx, _local_shape_idx):
 				
 # Move bullet
 func _physics_process(delta):
+	# Substract live time of our bullet by frame delta 
 	_time -= delta * 60
-	if _time < 0:
-		kill()
 	position += velocity
+	if _time < 0: # Kill bullet when live time reach less then zero
+		kill()
 
+# Add Bullet to Scene
 func add():
 	if GameManager.scene_holder:
 		GameManager.scene_holder.add_child(self)
@@ -69,5 +75,4 @@ func kill():
 		fx.add()
 # Return to Pool
 func remove():
-	Debug.set("bullets", Debug.get("bullets") - 1)
 	Pool.return_node(self)

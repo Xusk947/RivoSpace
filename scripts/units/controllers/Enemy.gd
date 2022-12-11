@@ -27,12 +27,17 @@ func _process(delta):
 		unit.target = null
 		unit.can_shoot = false
 		return
-	unit.can_shoot = Angles.angle_dist(unit.rotation, unit.target.rotation) < 15 # If Target in unit Shoot Area
+	# Angle to Target in rad
+	var angle = unit.target.position.angle_to_point(unit.position)
+	# Check if Target in unit shoot_angle
+	# TODO: Add shoot_angle to Unit
+	unit.can_shoot =  Angles.angle_dist(unit.rotation - 1.5708, angle) < deg2rad(15)
 	unit.moving = true
 	unit.rotate_to_point(unit.target.position, unit.rotation_speed * Angles.degg2rad)
 	unit.move_by_rotation()
 
 func _find_target():
+	# In priority we find player, after player Drones/Units
 	unit.target = GameManager.get_player()
 	if unit.target == null:
 		unit.target = GameManager.get_closest_alien(unit)

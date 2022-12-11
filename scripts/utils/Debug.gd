@@ -3,9 +3,6 @@ extends Node
 var variables:Dictionary = {}
 var to_print:Array = []
 
-func _ready():
-	to_print.append("bullets")
-
 func set(key:String, value):
 	variables[key] = value
 

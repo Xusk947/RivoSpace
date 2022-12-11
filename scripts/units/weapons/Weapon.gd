@@ -3,7 +3,6 @@ class_name Weapon
 
 export var reload:float
 export(Resource) var type
-
 onready var shoot_offset:Position2D = $Offset
 
 var unit:Unit
@@ -23,7 +22,8 @@ func _process(delta):
 		if not unit.target: return
 		if not (unit.target is Unit): return
 		if unit.target.killed: return
-		rotate_to_point(unit.target.position, type.rotation_speed)
+		if type.can_rotate:
+			rotate_to_point(unit.target.position, type.rotation_speed)
 
 func _timer_up():
 	if unit.can_shoot && unit.target:

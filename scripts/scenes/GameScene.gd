@@ -75,7 +75,7 @@ func _process(_delta):
 			card_to_spawn.erase(card)
 	if not game_control.visible: return
 	if Input.is_mouse_button_pressed(1):
-		var unit = _spawn_unit(get_global_mouse_position(), Res.trasher)
+		var unit = _spawn_unit(get_global_mouse_position(), Res.sharp)
 		unit.controller_script = Res.enemy
 		unit.add()
 	if Input.is_mouse_button_pressed(2):

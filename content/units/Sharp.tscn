@@ -2,13 +2,13 @@
 
 [ext_resource path="res://scripts/units/Unit.gd" type="Script" id=1]
 [ext_resource path="res://content/fx/FlyFx.tscn" type="PackedScene" id=2]
-[ext_resource path="res://sprites/units/minix.png" type="Texture" id=3]
+[ext_resource path="res://sprites/units/sharp.png" type="Texture" id=3]
 [ext_resource path="res://scripts/units/weapons/Weapon.gd" type="Script" id=4]
-[ext_resource path="res://content/units/weapons/basic.tres" type="Resource" id=5]
-[ext_resource path="res://sprites/units/weapons/basic-weapon.png" type="Texture" id=6]
+[ext_resource path="res://content/units/weapons/Sharp.tres" type="Resource" id=5]
+[ext_resource path="res://sprites/units/weapons/sharp-weapon.png" type="Texture" id=6]
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 32.0
+radius = 14.0
 
 [sub_resource type="Curve" id=2]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.09693, 0.0, 0, 0 ]
@@ -17,12 +17,13 @@ _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.09693, 0.0, 0, 0 
 collision_layer = 15
 collision_mask = 4
 script = ExtResource( 1 )
-max_health = 1000.0
-move_speed = 2.5
-max_speed = 250.0
+max_health = 25.0
+move_speed = 1.5
+max_speed = 150.0
+rotation_speed = 4.0
+regeneration = 0.3
 
 [node name="Shape" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 6 )
 shape = SubResource( 3 )
 
 [node name="Body" type="Sprite" parent="."]
@@ -31,22 +32,22 @@ texture = ExtResource( 3 )
 [node name="WeaponHolder" type="Node2D" parent="."]
 
 [node name="Weapon" type="Sprite" parent="WeaponHolder"]
-position = Vector2( 0, 15 )
+position = Vector2( 0, 2 )
 texture = ExtResource( 6 )
 script = ExtResource( 4 )
 type = ExtResource( 5 )
 
 [node name="Offset" type="Position2D" parent="WeaponHolder/Weapon"]
-position = Vector2( 0, -9 )
+position = Vector2( 0, -6 )
 
 [node name="ThrusterHolder" type="Node2D" parent="."]
 
 [node name="Fx" parent="ThrusterHolder" instance=ExtResource( 2 )]
-position = Vector2( 0, 27 )
-amount = 16
+position = Vector2( 0, 10 )
+amount = 10
 lifetime_randomness = 0.1
 fract_delta = false
+spread = 15.0
 initial_velocity = 100.0
-scale_amount = 2.5
 scale_amount_curve = SubResource( 2 )
 color = Color( 0.705882, 0.12549, 0.164706, 1 )

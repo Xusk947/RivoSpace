@@ -20,6 +20,7 @@ func take_node(path: String):
 # warning-ignore:return_value_discarded
 		object_pool.erase(path)
 	object.set_process(true)
+	object.set_physics_process(true)
 	object.visible = true
 	return object
 
@@ -27,6 +28,7 @@ func return_node(object):
 	if (object is Node2D):
 		object.visible = false
 		object.set_process(false)
+		object.set_physics_process(false)
 		object.request_ready()
 	if _return_queue.has(object):
 		return

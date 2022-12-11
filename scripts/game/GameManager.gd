@@ -90,8 +90,6 @@ func play_sound(audio:AudioStream, position:Vector2 = Vector2.ZERO):
 	stream.play()
 func get_card(team:Color) -> Card: 
 	if cards.has(team.to_html(false)):
-		print("Return Existed Card:", cards[team.to_html(false)])
 		return cards[team.to_html(false)]
 	cards[team.to_html(false)] = Res.basic_card.duplicate()
-	print("Return Created Card:", cards[team.to_html(false)])
 	return Res.basic_card

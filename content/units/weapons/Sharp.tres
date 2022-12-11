@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/units/weapons/WeaponType.gd" type="Script" id=1]
+[ext_resource path="res://sprites/units/weapons/sharp-weapon.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+reload = 70.0
+shoot_spacing = 10.0
+shots = 1
+bullet_per_shot = 1
+rotation_speed = 3.0
+shoot_cone = 15.0
+one_shot = true
+can_rotate = true
+bullet = "res://content/units/bullets/WeakBullet.tscn"
+texture = ExtResource( 2 )
+shoot_sounds = [  ]

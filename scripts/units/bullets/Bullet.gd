@@ -15,6 +15,7 @@ var _initialized:bool = false
 
 func _ready():
 	_time = type.lifetime
+	Debug.set("bullets", Debug.get("bullets") + 1)
 	if _initialized: return
 	if type is BulletType:
 		$Sprite.texture = type.texture
@@ -68,4 +69,5 @@ func kill():
 		fx.add()
 # Return to Pool
 func remove():
+	Debug.set("bullets", Debug.get("bullets") - 1)
 	Pool.return_node(self)

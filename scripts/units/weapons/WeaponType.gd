@@ -8,6 +8,7 @@ export var bullet_per_shot:int = 1
 export var rotation_speed:float = 3
 export var shoot_cone:float = 15
 export var one_shot:bool = true
+export var can_rotate:bool = true
 export(String, FILE, "*.tscn") var bullet:String
 export var texture:Texture
 export(Array, AudioStream) var shoot_sounds

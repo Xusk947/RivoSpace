@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource( 1 )
 damage = 10.0
-lifetime = 100.0
+lifetime = 50.0
 speed = 20.0
 hit_fx = "res://content/fx/HitFx.tscn"
 texture = ExtResource( 2 )

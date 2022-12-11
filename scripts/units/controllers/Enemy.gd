@@ -17,15 +17,17 @@ func on_remove():
 
 func _process(delta):
 	unit.moving = false
+	# target equal to Null
 	if not unit.target:
 		_find_target()
 		unit.can_shoot = false
 		return
+	# if target on scene but not added
 	if not unit.target.visible: 
 		unit.target = null
 		unit.can_shoot = false
 		return
-	unit.can_shoot = true
+	unit.can_shoot = Angles.angle_dist(unit.rotation, unit.target.rotation) < 15 # If Target in unit Shoot Area
 	unit.moving = true
 	unit.rotate_to_point(unit.target.position, unit.rotation_speed * Angles.degg2rad)
 	unit.move_by_rotation()

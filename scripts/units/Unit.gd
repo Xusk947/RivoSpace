@@ -60,7 +60,7 @@ func _init_weapon():
 
 func _physics_process(delta):
 	velocity = move_and_slide(velocity * delta * 60)
-	health += (regeneration + card.regeneration_speed) * card.regeneration_multiplayer
+	self.health += (regeneration + card.regeneration_speed) * card.regeneration_multiplayer
 	var max_calculated_speed:float = max_speed * card.movement_speed_multiplayer
 	velocity.x = clamp(velocity.x, -max_calculated_speed, max_calculated_speed)
 	velocity.y = clamp(velocity.y, -max_calculated_speed, max_calculated_speed)
@@ -187,13 +187,11 @@ func _get_health():
 	return health
 	
 func _set_health(v):
-	health = v
-	health = clamp(health, -1, max_health * card.health_multiplayer)
+	health = clamp(v, -1, max_health * card.health_multiplayer)
 
 func _set_team(v:Color):
 	team = v
 	card = GameManager.get_card(v)
-	print(v,":",card)
 	_change_thruster_color()
 
 func _get_team() -> Color:

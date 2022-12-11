@@ -15,7 +15,8 @@ func _process(_delta):
 	if player.killed:
 		_update_player()
 		return
-	value = player.health / player.max_health * player.card.health_multiplayer
+	value = player.health / (player.max_health * player.card.health_multiplayer)
+	print(player.health,":",player.max_health * player.card.health_multiplayer)
 	
 func _update_player():
 	player = GameManager.get_player()

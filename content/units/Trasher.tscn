@@ -17,10 +17,9 @@ _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.09693, 0.0, 0, 0 
 collision_layer = 15
 collision_mask = 4
 script = ExtResource( 1 )
-max_health = 50.0
+max_health = 150.0
 move_speed = 3.2
 max_speed = 300.0
-rotation_speed = 5.0
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 6 )
@@ -28,7 +27,6 @@ shape = SubResource( 3 )
 
 [node name="Body" type="Sprite" parent="."]
 texture = ExtResource( 3 )
-offset = Vector2( 1, 0 )
 
 [node name="WeaponHolder" type="Node2D" parent="."]
 

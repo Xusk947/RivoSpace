@@ -148,6 +148,7 @@ Res="*res://scripts/game/Res.gd"
 Events="*res://scripts/game/Events.gd"
 Pool="*res://scripts/game/Pool.gd"
 GameManager="*res://scripts/game/GameManager.gd"
+Debug="*res://scripts/utils/Debug.gd"
 
 [display]
 

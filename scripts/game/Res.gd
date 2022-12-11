@@ -10,6 +10,7 @@ var VFX = "res://content/entities/VFX.tscn"
 # Units
 var unit = "res://content/units/Unit.tscn" # UNIT BASE LOAD FROM PULL AUTOMATICLY
 var trasher = "res://content/units/Trasher.tscn"
+var sharp = "res://content/units/Sharp.tscn"
 
 # Unit Controllers
 var unit_script = preload("res://scripts/units/Unit.gd")

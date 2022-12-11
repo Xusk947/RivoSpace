@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sprites/uis/card/card-theme.tres" type="Theme" id=1]
+[ext_resource path="res://scripts/entities/VanishingText.gd" type="Script" id=2]
+
+[node name="VanishingText" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -21.0
+margin_top = -9.0
+margin_right = 19.0
+margin_bottom = 7.0
+theme = ExtResource( 1 )
+text = "a"
+align = 1
+valign = 1

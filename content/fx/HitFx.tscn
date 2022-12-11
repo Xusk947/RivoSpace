@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/entities/Fx.gd" type="Script" id=1]
+[ext_resource path="res://sprites/fx/small-explosion.png" type="Texture" id=2]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 1 ), 0.0, -0.374198, 0, 0, Vector2( 0.991611, 0 ), -0.57804, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=2]
+colors = PoolColorArray( 1, 1, 1, 0.737255, 0, 0, 0, 0 )
+
+[node name="Fx" type="CPUParticles2D"]
+emitting = false
+amount = 5
+one_shot = true
+explosiveness = 0.88
+local_coords = false
+texture = ExtResource( 2 )
+flag_align_y = true
+gravity = Vector2( 0, 0 )
+initial_velocity = 80.0
+initial_velocity_random = 0.44
+damping = 20.99
+scale_amount = 2.0
+scale_amount_curve = SubResource( 1 )
+color_ramp = SubResource( 2 )
+script = ExtResource( 1 )

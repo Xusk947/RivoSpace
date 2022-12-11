@@ -1,0 +1,28 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/cards/Card.gd" type="Script" id=1]
+[ext_resource path="res://sprites/cards/health-up.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+texture = ExtResource( 2 )
+name = "Body Scaning"
+description = "Ship Health + 50%"
+modulate_color = Color( 0.6, 0.898039, 0.313726, 1 )
+recursive = true
+health_multiplayer = 0.5
+regeneration_speed = 0.0
+regeneration_multiplayer = 0.0
+armor_multiplayer = 0.0
+damage_gain_multiplayer = 0.0
+movement_speed_multiplayer = 0.0
+rotation_speed_mutliplayer = 0.0
+body_damage_multiplayer = 0.0
+crit_chance = 0.0
+crit_multiplayer = 0.0
+weapon_shoot_cone_adding = 0.0
+bullet_damage_multiplayer = 0.0
+bullet_pricing = 0
+bullet_adding = 0
+max_drones = 0
+drones_build_time_speed_multiplayer = 0.0

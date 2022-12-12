@@ -20,6 +20,7 @@ script = ExtResource( 1 )
 max_health = 150.0
 move_speed = 3.2
 max_speed = 300.0
+expiriance_drop = 30.0
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 6 )

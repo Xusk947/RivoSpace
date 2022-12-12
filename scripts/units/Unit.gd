@@ -4,6 +4,7 @@ class_name Unit
 export var max_health:float = 310
 export var move_speed:float = .1
 export var max_speed:float = 3
+export var expiriance_drop:float = 10
 export var rotation_speed:float = 3
 export var regeneration:float = 0
 export(Script) var controller_script: Script setget _set_controller_script, _get_controller_script

@@ -10,6 +10,7 @@ func on_add():
 func on_kill():
 	var expiriance:Exp = Pool.take_node(Res.expiriance)
 	expiriance.position = global_position
+	expiriance.given = unit.expiriance_drop
 	expiriance.add()
 	
 func on_remove():

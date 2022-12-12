@@ -104,6 +104,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/entities/VanishingText.gd"
 }, {
+"base": "Node2D",
+"class": "WaveSpawner",
+"language": "GDScript",
+"path": "res://scripts/game/WaveSpawner.gd"
+}, {
 "base": "Sprite",
 "class": "Weapon",
 "language": "GDScript",
@@ -134,6 +139,7 @@ _global_script_class_icons={
 "Unit": "",
 "VFX": "",
 "VanishingText": "",
+"WaveSpawner": "",
 "Weapon": "",
 "WeaponType": ""
 }

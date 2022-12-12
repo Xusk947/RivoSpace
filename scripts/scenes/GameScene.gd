@@ -23,8 +23,14 @@ func _ready():
 	Events.connect("card_selected", self, "_on_card_select")
 	color_filler.visible = false
 	Res.reset_cards_out()
+	_add_wave_spawner()
 	_spawn_cards()
 	_spawn_player()
+# Create Wave Spawner Node
+func _add_wave_spawner():
+	var wave_spawner = WaveSpawner.new()
+	wave_spawner.name = "WaveSpawner"
+	add_child(wave_spawner)
 
 # Spawn player when game Starts | or when he has special ability to death resistance
 func _spawn_player():

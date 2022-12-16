@@ -54,14 +54,27 @@ margin_bottom = 48.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ExpBar" parent="CanvasLayer/Menu/MainContainer/GameControl/GameContainer/VBoxContainer" instance=ExtResource( 3 )]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Menu/MainContainer/GameControl/GameContainer/VBoxContainer"]
 margin_top = 52.0
 margin_right = 604.0
-margin_bottom = 66.0
+margin_bottom = 100.0
 size_flags_horizontal = 3
-size_flags_vertical = 2
+size_flags_vertical = 3
+custom_constants/margin_right = 100
+custom_constants/margin_top = 5
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 15
+
+[node name="ExpBar" parent="CanvasLayer/Menu/MainContainer/GameControl/GameContainer/VBoxContainer/MarginContainer" instance=ExtResource( 3 )]
+margin_left = 100.0
+margin_top = 5.0
+margin_right = 504.0
+margin_bottom = 33.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="UpgradeControl" type="Control" parent="CanvasLayer/Menu/MainContainer"]
+visible = false
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 1014.0

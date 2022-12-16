@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://sprites/backgrounds/background.png" type="Texture" id=1]
+[ext_resource path="res://sprites/backgrounds/stars-1.png" type="Texture" id=2]
+[ext_resource path="res://scripts/ui/ParallaxBackGround.gd" type="Script" id=3]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 1, 0.87451, 0, 0.517647, 1, 0, 0, 1 )
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+script = ExtResource( 3 )
+gradient = SubResource( 1 )
+
+[node name="Background" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2( 2048, 2048 )
+
+[node name="Sprite" type="Sprite" parent="Background"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Stars" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2( 2048, 2048 )
+
+[node name="Sprite" type="Sprite" parent="Stars"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Sprite2" type="Sprite" parent="Stars"]
+position = Vector2( 1005, 21 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Sprite3" type="Sprite" parent="Stars"]
+position = Vector2( 7, 983 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Sprite4" type="Sprite" parent="Stars"]
+position = Vector2( 1019, 983 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="StarDust" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2( 2048, 2048 )

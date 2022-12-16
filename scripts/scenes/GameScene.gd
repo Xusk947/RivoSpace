@@ -11,6 +11,9 @@ onready var game_control:Control = $CanvasLayer/Menu/MainContainer/GameControl
 onready var upgrade_control:Control = $CanvasLayer/Menu/MainContainer/UpgradeControl
 # Control Card Node | contains card auto placement node (aka) HBox/VBox 
 onready var card_holder:HBoxContainer = $CanvasLayer/Menu/MainContainer/UpgradeControl/CardsMargin/VBoxContainer/HBoxContainer
+# Background | ParallaxBackGround
+var background:ParallaxBackground
+
 # --- EXPIRIANCE --- 
 var expiriance_level:int # Current Level
 var expiriance_progress:float # How many Exp points Players has
@@ -18,14 +21,19 @@ var expiriance_max_progress:float = 25 # Exp points to new level
 signal level_up(current_level) # Sends signal when expiriance reach max level
 # --- CARDS ---
 var card_to_spawn:Array = []
+var _cards_to_select:bool = false
 
 func _ready():
 	Events.connect("card_selected", self, "_on_card_select")
 	color_filler.visible = false
 	Res.reset_cards_out()
+	_init_background()
 	_add_wave_spawner()
 	_spawn_cards()
 	_spawn_player()
+func _init_background():
+	background = Res.background.instance()
+	add_child(background)
 # Create Wave Spawner Node
 func _add_wave_spawner():
 	var wave_spawner = WaveSpawner.new()
@@ -53,16 +61,9 @@ func add_expiriance(amount:float):
 	Events.emit_signal("expiriance_gained", { 
 		expiriance = expiriance_progress,
 	})
-	# When EXP reach maximum level we level up and spawn cards, multiple max_expiriance by 1.2 
-	if expiriance_progress >= expiriance_max_progress:
-		expiriance_progress = expiriance_progress - expiriance_max_progress
-		expiriance_level += 1
-		expiriance_max_progress *= 1.2
-		Events.emit_signal("level_up", {level = expiriance_level, max_expiriance = expiriance_max_progress, current_expiriance = expiriance_progress})
-		set_child_process(false) # Stop all Node2D on Scene
-		_spawn_cards()
 # When Player select Card, and all cards animation is done, we remove all cards and resume game
 func _on_card_select(card):
+	_cards_to_select = false
 	GameManager.add_card(card, Res.team_alien)
 	_remove_cards()
 	set_child_process(true)
@@ -81,7 +82,19 @@ func _process(_delta):
 			card.spawn(1)
 		if card.modulate.a > 0.69:
 			card_to_spawn.erase(card)
-			
+	# CARD CATEGORY
+	# We return when player exp can level up more 1 time and 
+	# That fix the bug when on 3 level ups you can schoose 1 card from 6 or more
+	if _cards_to_select: return
+	# When EXP reach maximum level we level up and spawn cards, multiple max_expiriance by 1.2 
+	if expiriance_progress >= expiriance_max_progress:
+		set_child_process(false) # Stop all Node2D on Scene
+		_cards_to_select = true
+		expiriance_progress = expiriance_progress - expiriance_max_progress
+		expiriance_level += 1
+		expiriance_max_progress *= 1.2
+		Events.emit_signal("level_up", {level = expiriance_level, max_expiriance = expiriance_max_progress, current_expiriance = expiriance_progress})
+		_spawn_cards()
 	# DEBUG ONLY
 	if not game_control.visible: return
 	if Input.is_mouse_button_pressed(1):

@@ -4,20 +4,25 @@ extends Node
 var gamescene:PackedScene = preload("res://content/scenes/GameScene.tscn")
 
 # Enviroment / Entities
-var expiriance = "res://content/entities/Exp.tscn"
-var vanishing_text = "res://content/entities/VanishText.tscn"
-var VFX = "res://content/entities/VFX.tscn"
+const expiriance = "res://content/entities/Exp.tscn"
+const vanishing_text = "res://content/entities/VanishText.tscn"
+const VFX = "res://content/entities/VFX.tscn"
+const background:PackedScene = preload("res://content/ui/ParallaxBackGround.tscn")
 # Units
-var unit = "res://content/units/Unit.tscn" # UNIT BASE LOAD FROM PULL AUTOMATICLY
-var trasher = "res://content/units/Trasher.tscn"
-var sharp = "res://content/units/Sharp.tscn"
+const unit = "res://content/units/Unit.tscn" # UNIT BASE LOAD FROM PULL AUTOMATICLY
+const trasher = "res://content/units/Trasher.tscn"
+const sharp = "res://content/units/Sharp.tscn"
 
 # Unit Controllers
-var unit_script = preload("res://scripts/units/Unit.gd")
-var default_controller = preload("res://scripts/units/controllers/Controller.gd")
-var enemy = preload("res://scripts/units/controllers/Enemy.gd")
-var alien = preload("res://scripts/units/controllers/Alien.gd")
-var player = preload("res://scripts/units/controllers/Player.gd")
+const unit_script = preload("res://scripts/units/Unit.gd")
+const default_controller = preload("res://scripts/units/controllers/Controller.gd")
+const enemy = preload("res://scripts/units/controllers/Enemy.gd")
+const alien = preload("res://scripts/units/controllers/Alien.gd")
+const player = preload("res://scripts/units/controllers/Player.gd")
+
+# Bullets
+var basic_bullet = "res://content/units/bullets/Bullet.tscn"
+var weak_bullet = "res://content/units/bullets/WeakBullet.tscn"
 
 # Cards
 const card_holder = "res://content/ui/CardHolder.tscn" # Can be load from pull
@@ -38,6 +43,7 @@ var hit_fx = "res://content/fx/HitFx.tscn"
 var unit_death_fx:Array = [
 	preload("res://sounds/fx/Explosion-1.wav")
 ]
+
 var card_select:AudioStream = preload("res://sounds/fx/Card-Select-1.wav")
 var card_apply:AudioStream = preload("res://sounds/fx/Card-Apply.wav")
 var level_up:AudioStream = preload("res://sounds/fx/Powerup.wav")

@@ -20,8 +20,9 @@ func _collision(_rid:RID, body:Node, body_shape_idx, _local_shape_idx):
 		apply(body)
 
 func _process(delta):
-	if GameManager.get_player():
-		position = position.move_toward(GameManager.get_player().position, delta * 60 * move_speed)
+	var player = GameManager.get_player()
+	if player:
+		position = position.move_toward(player.position, delta * 60 * move_speed)
 
 func apply(unit:Unit):
 	unit.health += heal_boost

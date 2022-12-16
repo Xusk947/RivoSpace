@@ -8,17 +8,31 @@ const BULLETS_LOAD_AMOUNT:int = 800
 
 func _ready():
 	GameManager.boot_scene = self
-	# Create Base Cards for Teams
+	_create_cards()
+	_load_entities()
+	_load_fx()
+	_load_units()
+	_load_bullets()
+	GameManager.go_to_scene(Res.gamescene.instance())
+
+func _create_cards():
 	GameManager.get_card(Res.team_alien)
 	GameManager.get_card(Res.team_enemy)
-	# Load Object to Pool
-	# TODO: Make it easier to read, like add load_units(), load_fx()
+
+func _load_entities():
+	Pool.load_object(Res.vanishing_text, 800)
+	Pool.load_object(Res.expiriance, ENTITIES_LOAD_AMOUNT)
+	Pool.load_object(Res.card_holder, 5)
+
+func _load_units():
+	Pool.load_object(Res.unit, UNIT_LOAD_AMOUNT)
+	Pool.load_object(Res.sharp, UNIT_LOAD_AMOUNT)
+	Pool.load_object(Res.trasher, UNIT_LOAD_AMOUNT)
+
+func _load_fx():
 	Pool.load_object(Res.hit_fx, FX_LOAD_AMOUNT)
 	Pool.load_object(Res.death_fx, FX_LOAD_AMOUNT)
-	Pool.load_object(Res.unit, UNIT_LOAD_AMOUNT)
-	Pool.load_object(Res.expiriance, ENTITIES_LOAD_AMOUNT)
-	Pool.load_object(Res.vanishing_text, 800)
-	Pool.load_object(Res.card_holder, 5)
-	Pool.load_object("res://content/units/bullets/Bullet.tscn", BULLETS_LOAD_AMOUNT)
-	# After All Operations Switch Scene
-	GameManager.go_to_scene(Res.gamescene.instance())
+	
+
+func _load_bullets():
+	Pool.load_object(Res.basic_bullet)

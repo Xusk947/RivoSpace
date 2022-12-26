@@ -2,15 +2,16 @@ extends Controller
 class_name Enemy
 
 func on_add():
+	name = "EnemyController"
 	GameManager.enemies.append(unit)
 	unit.team = Res.team_enemy
 	unit.collision_layer = 0b1100
 	unit.collision_mask = 0b0100
 	
 func on_kill():
-	var expiriance:Exp = Pool.take_node(Res.expiriance)
+	var expiriance:Energy = Pool.take_node(Res.energy)
 	expiriance.position = global_position
-	expiriance.given = unit.expiriance_drop
+	expiriance.amount = rand_range(unit.energy_drop.x, unit.energy_drop.y)
 	expiriance.add()
 	
 func on_remove():

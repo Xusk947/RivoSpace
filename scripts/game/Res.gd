@@ -4,7 +4,7 @@ extends Node
 var gamescene:PackedScene = preload("res://content/scenes/GameScene.tscn")
 
 # Enviroment / Entities
-const expiriance = "res://content/entities/Exp.tscn"
+const energy = "res://content/entities/Energy.tscn"
 const vanishing_text = "res://content/entities/VanishText.tscn"
 const VFX = "res://content/entities/VFX.tscn"
 const background:PackedScene = preload("res://content/ui/ParallaxBackGround.tscn")
@@ -12,12 +12,14 @@ const background:PackedScene = preload("res://content/ui/ParallaxBackGround.tscn
 const unit = "res://content/units/Unit.tscn" # UNIT BASE LOAD FROM PULL AUTOMATICLY
 const trasher = "res://content/units/Trasher.tscn"
 const sharp = "res://content/units/Sharp.tscn"
+const main_ship_unit = "res://content/units/MainShip.tscn"
 
 # Unit Controllers
 const unit_script = preload("res://scripts/units/Unit.gd")
 const default_controller = preload("res://scripts/units/controllers/Controller.gd")
 const enemy = preload("res://scripts/units/controllers/Enemy.gd")
 const alien = preload("res://scripts/units/controllers/Alien.gd")
+const main_ship = preload("res://scripts/units/controllers/MainShip.gd")
 const player = preload("res://scripts/units/controllers/Player.gd")
 
 # Bullets

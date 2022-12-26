@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/scenes/GameScene.gd" type="Script" id=1]
 [ext_resource path="res://content/ui/HealthBar.tscn" type="PackedScene" id=2]
-[ext_resource path="res://content/ui/ExpBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://content/ui/EnergyBar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/uis/card/card-theme.tres" type="Theme" id=5]
 [ext_resource path="res://content/ui/RerollButton.tscn" type="PackedScene" id=6]
 

@@ -4,6 +4,7 @@ extends Node2D
 var boot_scene:BootScene
 var scene_holder:SceneHolder
 
+var main_ship:Unit
 var players:Array = []
 var aliens:Array = []
 var enemies:Array = []

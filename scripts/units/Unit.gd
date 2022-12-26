@@ -4,7 +4,9 @@ class_name Unit
 export var max_health:float = 310
 export var move_speed:float = .1
 export var max_speed:float = 3
-export var expiriance_drop:float = 10
+export var money_drop:Vector2 = Vector2(0, 1)
+export var energy_drop:Vector2 = Vector2(5, 25)
+export var max_energy:float = 200
 export var rotation_speed:float = 3
 export var regeneration:float = 0
 export(Script) var controller_script: Script setget _set_controller_script, _get_controller_script
@@ -32,6 +34,7 @@ var weapons:Array # Array of all weapons (Sprite with Weapon Script)
 var killed:bool = false # Only kill() set this parameter to True
 var controller # Controll all unit movements shooting
 var card:Card # Thats parameter says to unit which card it used
+var energy:float = 0.0
 
 var _inited:bool # To Call constructor only once
 
@@ -45,6 +48,7 @@ func _ready():
 # For future
 func _create_constructor():
 	health = max_health
+	energy = max_energy
 # Load outline from Sprite if sprite.name + "-outline" exist
 func _init_outline():
 	var outline_sprite_new = Sprite.new()
@@ -94,7 +98,9 @@ func rotate_to_point(pos:Vector2, rot_speed:float):
 	var old_rotation = rotation
 	rotation = Angles.move_toward(rotation, position.angle_to_point(pos) - 1.5708, rot_speed * card.rotation_speed_mutliplayer)
 	rotation_dir = Mathf.mod(old_rotation, Angles.PI2) - rotation
-
+func change_weapons(weaponType:WeaponType):
+	for weapon in weapons:
+		weapon.change_weapon_type(weaponType)
 # Change outline color when unit team is changed
 func _change_outline_color(to:Color = team):
 	if outline: # Check if unit has outline

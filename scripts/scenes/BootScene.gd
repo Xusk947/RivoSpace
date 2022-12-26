@@ -21,7 +21,7 @@ func _create_cards():
 
 func _load_entities():
 	Pool.load_object(Res.vanishing_text, 800)
-	Pool.load_object(Res.expiriance, ENTITIES_LOAD_AMOUNT)
+	Pool.load_object(Res.energy, ENTITIES_LOAD_AMOUNT)
 	Pool.load_object(Res.card_holder, 5)
 
 func _load_units():

@@ -6,6 +6,7 @@ export var is_ai:bool = false
 var _target_ticker:float = .5
 
 func on_add():
+	name = "PlayerController"
 	unit.collision_layer = 0b1010
 	unit.collision_mask = 0b0010
 	Events.emit_signal("player_spawned", {player = unit})

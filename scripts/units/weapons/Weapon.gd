@@ -2,26 +2,17 @@ extends Sprite
 class_name Weapon
 
 export var reload:float
-export(Resource) var type
+export(Resource) onready var type setget _set_type, _get_type
 onready var shoot_offset:Position2D = $Offset
 
 var unit:Unit
 var _timer:Timer
 
-func _ready():
-	if type is WeaponType:
-		# Create timer, says when unit can shoot
-		_timer = Timer.new()
-		# For weapons installed in ship / can't rotate
-		if type.texture:
-			texture = type.texture
-		# We set Time in #WeaponType in secs but in code use sec / 60.0 = tick
-		_timer.wait_time = type.reload / 60
-		_timer.connect("timeout", self, "_timer_up")
-		# Start when Weapon is created
-		_timer.autostart = true
-		# Add timer as a child
-		add_child(_timer)
+func change_weapon_type(weaponType:WeaponType):
+	type = weaponType
+	if type.texture:
+		texture = type.texture
+	_timer.wait_time = type.reload / 60
 
 func _process(delta):
 	# If Weapon exist without unit
@@ -34,6 +25,7 @@ func _process(delta):
 		rotate_to_point(unit.target.position, type.rotation_speed)
 # When Timer says us we can shoot
 func _timer_up():
+	if unit.energy <= 0: return # Unit doesn't have energy to shoot
 	if unit.can_shoot && unit.target: # Unit can shoot and has a target
 		for i in (type.shots + unit.card.bullet_adding): # Iterate all #WeaponType.shots at once
 			_shoot(type.shoot_cone + unit.card.weapon_shoot_cone_adding)
@@ -56,9 +48,25 @@ func _shoot(angle:float = 0):
 	bullet.unit = unit
 	bullet.modulate = unit.team
 	bullet.add()
+	unit.energy -= type.energy_per_shoot
 # Rotate weapon to Specific Angle with rotation_speed
 func rotate_to(angle:float, rot_speed:float):
 	rotation = Angles.move_toward(rotation, angle, rot_speed)
 # Rotate weapon to point with rotation_speed
 func rotate_to_point(pos:Vector2, rot_speed:float):
 	rotation = Angles.move_toward(rotation, pos.angle_to_point(global_position) + 1.5708 - unit.rotation, 2  * rot_speed * Angles.degg2rad)
+
+func _get_type():
+	return type
+	
+func _set_type(value:WeaponType):
+	type = value
+	if not _timer:
+		_timer = Timer.new()
+			# We set Time in #WeaponType in secs but in code use sec / 60.0 = tick
+		_timer.connect("timeout", self, "_timer_up")
+		# Start when Weapon is created
+		_timer.autostart = true
+		# Add timer as a child
+		add_child(_timer)
+	_timer.wait_time = type.reload / 60

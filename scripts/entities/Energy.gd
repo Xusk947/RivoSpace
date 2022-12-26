@@ -1,8 +1,7 @@
 extends Area2D
-class_name Exp
+class_name Energy
 
-var given:float = 10
-var heal_boost:float = 0
+var amount:float = 10
 var move_speed:float = 5
 
 var player:Unit
@@ -17,18 +16,13 @@ func _ready():
 
 func _collision(_rid:RID, body:Node, body_shape_idx, _local_shape_idx):
 	if (body is Unit and body.controller is Player):
-		apply(body)
+		body.energy += amount
+		remove()
 
 func _process(delta):
 	var player = GameManager.get_player()
 	if player:
 		position = position.move_toward(player.position, delta * 60 * move_speed)
-
-func apply(unit:Unit):
-	unit.health += heal_boost
-	if GameManager.scene_holder is GameScene:
-		GameManager.scene_holder.add_expiriance(given)
-	remove()
 
 func remove():
 	Pool.return_node(self)

@@ -2,6 +2,7 @@ extends Controller
 class_name Alien
 
 func on_add():
+	name = "Alien"
 	unit.team = Res.team_alien
 	unit.collision_layer = 0b1010
 	unit.collision_mask = 0b0010

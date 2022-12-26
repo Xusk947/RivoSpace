@@ -29,6 +29,9 @@ func _ready():
 		$Area2D.connect("body_shape_entered", self, "_collision")
 	_initialized = true
 
+func _process(delta):
+	modulate.a = _time / type.lifetime 
+
 func _collision(_rid:RID, body:Node, body_shape_idx, _local_shape_idx):
 	if (body is PhysicsBody2D):
 		var owner:Node2D = body.shape_owner_get_owner(body_shape_idx)

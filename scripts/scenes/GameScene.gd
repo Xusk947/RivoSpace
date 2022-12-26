@@ -14,11 +14,6 @@ onready var card_holder:HBoxContainer = $CanvasLayer/Menu/MainContainer/UpgradeC
 # Background | ParallaxBackGround
 var background:ParallaxBackground
 
-# --- EXPIRIANCE --- 
-var expiriance_level:int # Current Level
-var expiriance_progress:float # How many Exp points Players has
-var expiriance_max_progress:float = 25 # Exp points to new level
-signal level_up(current_level) # Sends signal when expiriance reach max level
 # --- CARDS ---
 var card_to_spawn:Array = []
 var _cards_to_select:bool = false
@@ -29,8 +24,7 @@ func _ready():
 	Res.reset_cards_out()
 	_init_background()
 	_add_wave_spawner()
-	_spawn_cards()
-	_spawn_player()
+	_spawn_main_ship()
 func _init_background():
 	background = Res.background.instance()
 	add_child(background)
@@ -41,10 +35,11 @@ func _add_wave_spawner():
 	add_child(wave_spawner)
 
 # Spawn player when game Starts | or when he has special ability to death resistance
-func _spawn_player():
-	var unit = _spawn_unit(Vector2.ZERO)
-	unit.controller_script = Res.player
+func _spawn_main_ship():
+	var unit = _spawn_unit(Vector2.ZERO, Res.main_ship_unit)
+	unit.controller_script = Res.main_ship
 	unit.add()
+	unit.position = Vector2(30, 0)
 	var camera2d = FollowingCamera2D.new()
 	camera2d.current = true
 	add_child(camera2d)
@@ -54,13 +49,6 @@ func set_child_process(proc:bool):
 		if child is Node2D:
 			child.set_physics_process(proc)
 			child.set_process(proc)
-## Add Expiriance to current game
-## Optionally check if expiriance > max expiriance => level up
-func add_expiriance(amount:float):
-	expiriance_progress += amount
-	Events.emit_signal("expiriance_gained", { 
-		expiriance = expiriance_progress,
-	})
 # When Player select Card, and all cards animation is done, we remove all cards and resume game
 func _on_card_select(card):
 	_cards_to_select = false
@@ -87,14 +75,6 @@ func _process(_delta):
 	# That fix the bug when on 3 level ups you can schoose 1 card from 6 or more
 	if _cards_to_select: return
 	# When EXP reach maximum level we level up and spawn cards, multiple max_expiriance by 1.2 
-	if expiriance_progress >= expiriance_max_progress:
-		set_child_process(false) # Stop all Node2D on Scene
-		_cards_to_select = true
-		expiriance_progress = expiriance_progress - expiriance_max_progress
-		expiriance_level += 1
-		expiriance_max_progress *= 1.2
-		Events.emit_signal("level_up", {level = expiriance_level, max_expiriance = expiriance_max_progress, current_expiriance = expiriance_progress})
-		_spawn_cards()
 	# DEBUG ONLY
 	if not game_control.visible: return
 	if Input.is_mouse_button_pressed(1):
@@ -102,7 +82,7 @@ func _process(_delta):
 		unit.controller_script = Res.enemy
 		unit.add()
 	if Input.is_mouse_button_pressed(2):
-		var unit = _spawn_unit(get_global_mouse_position())
+		var unit = _spawn_unit(get_global_mouse_position(), Res.sharp)
 		unit.controller_script = Res.alien
 		unit.add()
 	if Input.is_key_pressed(KEY_K) and GameManager.get_player() == null:

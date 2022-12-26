@@ -50,12 +50,12 @@ _global_script_classes=[ {
 "path": "res://scripts/units/controllers/Enemy.gd"
 }, {
 "base": "Area2D",
-"class": "Exp",
+"class": "Energy",
 "language": "GDScript",
-"path": "res://scripts/entities/Exp.gd"
+"path": "res://scripts/entities/Energy.gd"
 }, {
 "base": "ProgressBar",
-"class": "ExpBar",
+"class": "EnergyBar",
 "language": "GDScript",
 "path": "res://scripts/ui/ExpBar.gd"
 }, {
@@ -128,8 +128,8 @@ _global_script_class_icons={
 "CardHolder": "",
 "Controller": "",
 "Enemy": "",
-"Exp": "",
-"ExpBar": "",
+"Energy": "",
+"EnergyBar": "",
 "FollowingCamera2D": "",
 "Fx": "",
 "GameScene": "",
@@ -223,6 +223,7 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_6="fx"
 2d_physics/layer_7="obstacles"
 2d_physics/layer_8="enviroment"
+2d_physics/layer_9="main-ship"
 
 [locale]
 

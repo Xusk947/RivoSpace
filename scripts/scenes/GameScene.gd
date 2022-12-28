@@ -97,7 +97,7 @@ func _process(_delta):
 		var unit = _spawn_unit(get_global_mouse_position(), Res.sharp)
 		unit.controller_script = Res.alien
 		unit.add()
-	if Input.is_key_pressed(KEY_K) and GameManager.get_player() == null:
+	if Input.is_key_pressed(KEY_K) and GameManager.players.size() <= 1:
 		var unit = _spawn_unit(get_global_mouse_position())
 		unit.controller_script = Res.player
 		unit.add()

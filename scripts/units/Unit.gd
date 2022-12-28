@@ -41,15 +41,18 @@ var _inited:bool # To Call constructor only once
 
 func _ready():
 	killed = false
+	_reset_variables()
 	if _inited: return
 	_create_constructor()
 	_init_outline()
 	_init_weapon()
 	_inited = true
-# For future
-func _create_constructor():
+func _reset_variables():
 	health = max_health
 	energy = max_energy
+# For future : TODO IDK
+func _create_constructor():
+	pass
 # Load outline from Sprite if sprite.name + "-outline" exist
 func _init_outline():
 	var outline_sprite_new = Sprite.new()
@@ -167,7 +170,7 @@ func kill():
 	if controller:
 		controller.on_kill()
 	# Play death sound when unit die
-	GameManager.play_sound(Res.unit_death_fx[rand_range(0, len(Res.unit_death_fx))])
+	GameManager.play_sound(ArrayTools.select_random(Res.unit_death_vfx))
 	remove()
 
 func remove():

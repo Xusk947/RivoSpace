@@ -1,11 +1,11 @@
 extends Node
 class_name PathData
 
-var path_points:Array
-var shop_point:PathPoint
-var special_points:Array
-var start_point:PathPoint
-var finish_point:PathPoint
+var path_points:Array # Array<PathPoint>
+var shop_point:PathPoint # You can buy somethin there, only 1 point per map
+var special_points:Array # Points used for some Events, like help cargo unit
+var start_point:PathPoint # That points says when Units will start their adventure
+var finish_point:PathPoint # Finish point, last point on the Star Path
 
 func _init(path_points:Array):
 	self.path_points = path_points.duplicate()

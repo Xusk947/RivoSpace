@@ -21,6 +21,8 @@ func on_remove():
 	GameManager.players.erase(unit)
 
 func _process(delta):
+	# It check when player close to the MainShip and if no changes for last frame
+	# Automaticlly add alpha, when alpha < 0 ship move to MainShip free space
 	if unit.modulate.a < 1 and _last_alpha == unit.modulate.a:
 		unit.modulate.a = lerp(unit.modulate.a, 1, 0.2)
 	_last_alpha = unit.modulate.a
@@ -43,6 +45,7 @@ func _target_update(delta):
 		unit.can_shoot = true
 		if unit.target.killed:
 			_find_target()
+
 func _update_keyboard(delta):
 	var vel = Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_down", "move_up"))
 	unit.rotation += unit.rotation_speed * Angles.degg2rad * vel.x

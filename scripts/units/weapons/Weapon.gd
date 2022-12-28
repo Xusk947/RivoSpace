@@ -24,7 +24,7 @@ func _process(delta):
 		if unit.target.killed: return # Target is killed
 		# Rotate directly to Target
 		rotate_to_point(unit.target.position, type.rotation_speed)
-		if reload == 0:
+		if type.reload == 0:
 			_timer_up()
 # When Timer says us we can shoot
 func _timer_up():

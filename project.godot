@@ -190,6 +190,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
+ArrayTools="*res://scripts/utils/ArrayTools.gd"
 Mathf="*res://scripts/math/Mathf.gd"
 Angles="*res://scripts/math/Angles.gd"
 Res="*res://scripts/game/Res.gd"

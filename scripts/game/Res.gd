@@ -36,15 +36,15 @@ var cards_to_drop:Array = []
 const all_cards = [] # Containes All loaded Cards
 
 # Team
-var team_alien = Color.orange
-var team_enemy = Color.crimson
+const team_alien = Color.orange
+var team_enemy = Color.crimson # Because when We travel between planets we can find new Race's
 
 # Fx
-var death_fx = "res://content/fx/Explosion.tscn"
-var hit_fx = "res://content/fx/HitFx.tscn"
-
+const death_fx = "res://content/fx/Explosion.tscn"
+const hit_fx = "res://content/fx/HitFx.tscn"
+const ride_fx = "res://content/fx/RideFx.tscn"
 # Sounds / VFX
-var unit_death_fx:Array = [
+var unit_death_vfx:Array = [
 	preload("res://sounds/fx/Explosion-1.wav")
 ]
 

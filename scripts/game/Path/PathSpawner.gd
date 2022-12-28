@@ -16,75 +16,92 @@ var size:Vector2 = Vector2(5, 8) # Size of Star Path
 var scale_factor = 5.0 # For Distance Between Points
 var path_points:Array # Array<PathPoint>
 
-var debug:bool = false
-var finished:bool = false
+var debug:bool = false # Shows lines/sprites
+var finished:bool = false # In Main loop used to check when it ready for use
 
 func _ready():
-	points = []
-	spawn_path()
-
+	points = [] # Create Empty Array
+	spawn_path() # Start Spawn Generation
+# Used only when points added to Create Boubles
 func _physics_process(delta):
 	for i in points.size():
 		var point:RigidBody2D = points[i]
+		# When one of all points is sleeping we start connecting them
 		if point.sleeping:
 			create_path_points()
 			points = []
 			return
-
+# That method connect All points for another's and set self.data for PathData variable
+# when generator is finished set finished = true
+# before use PathSpawner.data check when it will be finished
 func create_path_points():
 	path_positions = []
 	special_points = []
 	# Set Start point
 	var smallest_shape:CollisionShape2D = points[0].get_child(0)
-	# Check Every Point on them Map and find circle with smallest radius
+	# Iterate every Point on them Map and find circle with smallest radius
 	for i in points.size():
 		var point:CollisionShape2D = points[i].get_child(0)
+		# Check if best point radius less than current
 		if point.shape.radius < smallest_shape.shape.radius:
 			smallest_shape = point
+			# Set Best point to current
 			start_point = points[i]
-	var old_farest:float = 0
-	# Check Every Point and Find Circle farrest from start point
+	# Distance for start point to finish point
+	var farrest_distance:float = 0
+	# Iterate every Point and Find Circle farrest from start point
 	for i in points.size():
 		var point:RigidBody2D = points[i]
+		# Skip if start point equal to them self
 		if point == start_point: continue
-		if point.position.distance_squared_to(start_point.position) > old_farest:
-			old_farest = point.position.distance_squared_to(start_point.position)
+		if point.position.distance_squared_to(start_point.position) > farrest_distance:
+			# Set distance/finish_point to distance/point between this point and start point
+			farrest_distance = point.position.distance_squared_to(start_point.position)
 			finish_point = point
 	# Create Additional Points
 	for i in special_points_count:
+		# Additional points like not a Main Missions in the game | (aka) Clear Attack to the Planet
 		special_points.append(choose_point_except_used())
 	if has_shop:
+		# Create only one shop on the map
 		shop_point = choose_point_except_used()
 	# Create Path's for points
 	for i in points.size():
 		var point:RigidBody2D = points[i]
+		# This array says to current point with which point it must create Path
 		var previus_best_point = []
 		previus_best_point.append(points[i])
-		# Every Point can connect only with 2 members
+		# Every Point can connect only with 2 members, setted by value 2
 		for k in 2:
-			var min_dst = 9999 * 9999
+			# 9999 * 9999 in square distance
+			var min_dst = 99980001
+			# Set best point to 0 and try to find most closest point to this 
+			# Exclude last time added point 
 			var bestPoint:RigidBody2D = points[0]
 			for n in points.size():
+				# Another point in this Cycle
 				var point2:RigidBody2D = points[n]
+				# Continue when point was added to array and if point equal to them self
 				if previus_best_point.has(point2): continue
 				if point == point2: continue
+				# Check distance and set to best point when it more than last best point
 				var dst = point.position.distance_squared_to(point2.position)
 				if dst < min_dst:
 					min_dst = dst
 					bestPoint = point2
 			previus_best_point.append(bestPoint)
-			# DEBUG ONLY
 			var path_point = PathPoint.new(point.position)
 			var second_point = PathPoint.new(bestPoint.position)
 			path_point.connect_point(second_point)
 			path_points.append(path_point)
+			# DEBUG ONLY | CREATE LINES BETWEEN CONNECTED POINTS
 			if debug:
 				var line = Line2D.new()
 				line.modulate.a = .2
 				line.add_point(point.position, 0)
 				line.add_point(bestPoint.position, 0)
 				add_child(line)
-		# DEBUG ONLY
+		# DEBUG ONLY | CREATE SPRITES ON POINT POSITIONS
 		if debug:
 			var sprite = Sprite.new()
 			sprite.texture = tex
@@ -99,10 +116,12 @@ func create_path_points():
 			if point == shop_point:
 				sprite.modulate = Color.yellow
 			add_child(sprite)
-	finished = true
+	# When generator finished, it set data to PathData from path_points array
 	data = add_path_data()
+	finished = true
 
 func add_path_data():
+	# Create Special DataContainer for Path
 	var path_data = PathData.new(path_points)
 	path_data.set_start_point(start_point)
 	path_data.set_shop_point(shop_point)

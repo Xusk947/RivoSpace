@@ -28,6 +28,9 @@ func go_to_scene(scene:SceneHolder):
 		scene_holder.out()
 	scene_holder = scene
 	scene_holder.entter()
+	camera = FollowingCamera2D.new()
+	camera.current = true
+	scene_holder.add_child(camera)
 	boot_scene.add_child(scene_holder)
 
 func get_enemy():
@@ -69,7 +72,9 @@ func get_alien():
 
 func get_player():
 	if players.size() > 0:
-		return players[0]
+		for player in players:
+			if player.visible:
+				return player
 	return null
 
 func get_closest_player():

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/game/Path/PathSpawner.gd" type="Script" id=1]
+[ext_resource path="res://sprites/entities/exp.png" type="Texture" id=2]
+
+[node name="PathSpawner" type="Node2D"]
+script = ExtResource( 1 )
+tex = ExtResource( 2 )

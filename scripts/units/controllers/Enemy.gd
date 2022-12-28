@@ -3,6 +3,7 @@ class_name Enemy
 
 func on_add():
 	name = "EnemyController"
+	unit.name = "Enemy"
 	GameManager.enemies.append(unit)
 	unit.team = Res.team_enemy
 	unit.collision_layer = 0b1100
@@ -43,3 +44,6 @@ func _find_target():
 	unit.target = GameManager.get_player()
 	if unit.target == null:
 		unit.target = GameManager.get_closest_alien(unit)
+		if unit.target == null and GameManager.main_ship:
+			unit.target = GameManager.main_ship
+		return

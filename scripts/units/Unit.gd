@@ -9,6 +9,7 @@ export var energy_drop:Vector2 = Vector2(5, 25)
 export var max_energy:float = 200
 export var rotation_speed:float = 3
 export var regeneration:float = 0
+export var energy_regeneration:float = 0
 export(Script) var controller_script: Script setget _set_controller_script, _get_controller_script
 
 var velocity:Vector2 = Vector2() # every frame move unit
@@ -29,12 +30,12 @@ onready var _thruster_holder:Node2D = $ThrusterHolder # Holder for all Thruster 
 
 var outline:Sprite # TODO: Fix it, and make auto outline generator in external app
 var health:float setget _set_health, _get_health
+var energy:float = 0.0 setget _set_energy, _get_energy
 var target:Unit
 var weapons:Array # Array of all weapons (Sprite with Weapon Script)
 var killed:bool = false # Only kill() set this parameter to True
 var controller # Controll all unit movements shooting
 var card:Card # Thats parameter says to unit which card it used
-var energy:float = 0.0
 
 var _inited:bool # To Call constructor only once
 
@@ -76,6 +77,7 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity * delta * 60)
 	# Regenerate health every physics frame
 	self.health += (regeneration + card.regeneration_speed) * card.regeneration_multiplayer
+	self.energy += energy_regeneration
 	# Calculate max_speed with card parameter
 	var max_calculated_speed:float = max_speed * card.movement_speed_multiplayer
 	# Clamp Velocity to max_speed
@@ -206,7 +208,13 @@ func _collision(_rid:RID, body:Node, body_shape_idx, _local_shape_idx):
 	if body is KinematicBody2D:
 		if "Unit" in body:
 			body.health -= 0
-
+func _get_energy():
+	return energy
+# Clamp Energy via max_energy
+# TODO: Add card energy Bonus
+func _set_energy(v):
+	energy = clamp(v, 0, max_energy)
+# Return Health
 func _get_health():
 	return health
 # We clamp health to our calculated max_health at maximum point and -1 minimum, cuz unit MUST DIE!  

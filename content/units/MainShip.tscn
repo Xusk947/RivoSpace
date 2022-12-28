@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/units/Unit.gd" type="Script" id=1]
 [ext_resource path="res://content/fx/FlyFx.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scripts/units/weapons/Weapon.gd" type="Script" id=4]
 [ext_resource path="res://content/units/weapons/basic.tres" type="Resource" id=5]
 [ext_resource path="res://sprites/units/weapons/basic-weapon.png" type="Texture" id=6]
+[ext_resource path="res://content/units/main-ship/ShipHub.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 130.0
@@ -13,13 +14,21 @@ radius = 130.0
 [sub_resource type="Curve" id=2]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.09693, 0.0, 0, 0 ]
 
+[sub_resource type="CircleShape2D" id=4]
+radius = 230.0
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 30.0
+
 [node name="Unit" type="KinematicBody2D"]
 collision_layer = 15
 collision_mask = 4
 script = ExtResource( 1 )
-max_health = 1000.0
+max_health = 10000.0
 move_speed = 2.5
 max_speed = 250.0
+max_energy = 1000.0
+energy_regeneration = 1.0
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -2 )
@@ -52,4 +61,23 @@ scale_amount_curve = SubResource( 2 )
 color = Color( 0.705882, 0.12549, 0.164706, 1 )
 
 [node name="UnitSpawnPoint" type="Position2D" parent="."]
-position = Vector2( 0, 25 )
+position = Vector2( 0, -88 )
+
+[node name="ShipHub" parent="." instance=ExtResource( 7 )]
+
+[node name="ChargerZone" type="Area2D" parent="."]
+collision_layer = 10
+collision_mask = 4
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="ChargerZone"]
+shape = SubResource( 4 )
+
+[node name="ShipEntterZone" type="Area2D" parent="."]
+position = Vector2( 0, 15 )
+collision_layer = 10
+collision_mask = 4
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="ShipEntterZone"]
+shape = SubResource( 5 )

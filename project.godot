@@ -80,14 +80,44 @@ _global_script_classes=[ {
 "path": "res://scripts/ui/HealthBar.gd"
 }, {
 "base": "Controller",
+"class": "MainShip",
+"language": "GDScript",
+"path": "res://scripts/units/controllers/MainShip.gd"
+}, {
+"base": "Node",
+"class": "PathData",
+"language": "GDScript",
+"path": "res://scripts/game/Path/PathData.gd"
+}, {
+"base": "Reference",
+"class": "PathPoint",
+"language": "GDScript",
+"path": "res://scripts/game/Path/PathPoint.gd"
+}, {
+"base": "Node2D",
+"class": "PathSpawner",
+"language": "GDScript",
+"path": "res://scripts/game/Path/PathSpawner.gd"
+}, {
+"base": "Controller",
 "class": "Player",
 "language": "GDScript",
 "path": "res://scripts/units/controllers/Player.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "PlayerCharacter",
+"language": "GDScript",
+"path": "res://scripts/entities/PlayerCharacter.gd"
 }, {
 "base": "Node2D",
 "class": "SceneHolder",
 "language": "GDScript",
 "path": "res://scripts/game/SceneHolder.gd"
+}, {
+"base": "Node2D",
+"class": "ShipHub",
+"language": "GDScript",
+"path": "res://scripts/units/main-ship/ShipHub.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Unit",
@@ -134,8 +164,14 @@ _global_script_class_icons={
 "Fx": "",
 "GameScene": "",
 "HealthBar": "",
+"MainShip": "",
+"PathData": "",
+"PathPoint": "",
+"PathSpawner": "",
 "Player": "",
+"PlayerCharacter": "",
 "SceneHolder": "",
+"ShipHub": "",
 "Unit": "",
 "VFX": "",
 "VanishingText": "",
@@ -224,6 +260,8 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_7="obstacles"
 2d_physics/layer_8="enviroment"
 2d_physics/layer_9="main-ship"
+2d_physics/layer_17="ship-hub"
+2d_physics/layer_18="ship-character"
 
 [locale]
 

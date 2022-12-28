@@ -7,7 +7,9 @@ var gamescene:PackedScene = preload("res://content/scenes/GameScene.tscn")
 const energy = "res://content/entities/Energy.tscn"
 const vanishing_text = "res://content/entities/VanishText.tscn"
 const VFX = "res://content/entities/VFX.tscn"
+const player_character = "res://content/entities/PlayerCharacter.tscn"
 const background:PackedScene = preload("res://content/ui/ParallaxBackGround.tscn")
+const path_spawner = preload("res://content/scenes/PathSpawner.tscn")
 # Units
 const unit = "res://content/units/Unit.tscn" # UNIT BASE LOAD FROM PULL AUTOMATICLY
 const trasher = "res://content/units/Trasher.tscn"

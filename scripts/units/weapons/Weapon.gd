@@ -12,7 +12,8 @@ func change_weapon_type(weaponType:WeaponType):
 	type = weaponType
 	if type.texture:
 		texture = type.texture
-	_timer.wait_time = type.reload / 60
+	if reload > 0:
+		_timer.wait_time = type.reload / 60
 
 func _process(delta):
 	# If Weapon exist without unit
@@ -23,14 +24,19 @@ func _process(delta):
 		if unit.target.killed: return # Target is killed
 		# Rotate directly to Target
 		rotate_to_point(unit.target.position, type.rotation_speed)
+		if reload == 0:
+			_timer_up()
 # When Timer says us we can shoot
 func _timer_up():
-	if unit.energy <= 0: return # Unit doesn't have energy to shoot
-	if unit.can_shoot && unit.target: # Unit can shoot and has a target
+	if can_shoot(): # Unit can shoot and has a target
 		for i in (type.shots + unit.card.bullet_adding): # Iterate all #WeaponType.shots at once
 			_shoot(type.shoot_cone + unit.card.weapon_shoot_cone_adding)
 		if len(type.shoot_sounds) > 0: # When shoot create #WeaponType shoot sound if exist
 			GameManager.play_sound(type.shoot_sounds[rand_range(0, len(type.shoot_sounds))], unit.position)
+
+# Check for unit energy and unit state (can shoot) and last check for unit target if it exist
+func can_shoot() -> bool:
+	return unit.energy > 0 and unit.can_shoot and unit.target != null
 
 func _shoot(angle:float = 0):
 	# Take a bullet from Object Pool 

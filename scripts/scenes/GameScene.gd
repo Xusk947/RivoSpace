@@ -17,32 +17,36 @@ var background:ParallaxBackground
 # --- CARDS ---
 var card_to_spawn:Array = []
 var _cards_to_select:bool = false
+# --- STAR PATH ---
+var star_path:PathSpawner
 
 func _ready():
 	Events.connect("card_selected", self, "_on_card_select")
 	color_filler.visible = false
 	Res.reset_cards_out()
 	_init_background()
+	_init_star_map()
 	_add_wave_spawner()
-	_spawn_main_ship()
 func _init_background():
 	background = Res.background.instance()
 	add_child(background)
+
+func _init_star_map():
+	star_path = Res.path_spawner.instance()
+	add_child(star_path)
 # Create Wave Spawner Node
 func _add_wave_spawner():
 	var wave_spawner = WaveSpawner.new()
 	wave_spawner.name = "WaveSpawner"
 	add_child(wave_spawner)
-
 # Spawn player when game Starts | or when he has special ability to death resistance
-func _spawn_main_ship():
-	var unit = _spawn_unit(Vector2.ZERO, Res.main_ship_unit)
+func _spawn_main_ship(pos:Vector2):
+	var unit = _spawn_unit(pos, Res.main_ship_unit)
 	unit.controller_script = Res.main_ship
 	unit.add()
 	unit.position = Vector2(30, 0)
-	var camera2d = FollowingCamera2D.new()
-	camera2d.current = true
-	add_child(camera2d)
+	
+	return unit
 ## Stop or Resume all children processing mode
 func set_child_process(proc:bool):
 	for child in get_children():
@@ -55,6 +59,9 @@ func _on_card_select(card):
 	GameManager.add_card(card, Res.team_alien)
 	_remove_cards()
 	set_child_process(true)
+func spawn_path(data:PathData):
+	var main_ship:Unit = _spawn_main_ship(data.start_point.pos)
+	
 # TODO: Move Add WaveSpawner.gd
 func spawn_wave():
 	var wave = _get_wave()
@@ -63,6 +70,11 @@ func _get_wave():
 	pass
 
 func _process(_delta):
+	# Remove Star Path Node When Generation is Finished
+	if star_path and star_path.finished:
+		spawn_path(star_path.data)
+		remove_child(star_path)
+		star_path = null
 	# When Player Start Selecting Cards, Spawn card with some delay
 	if len(card_to_spawn) > 0:
 		var card:CardHolder = card_to_spawn[0]
@@ -129,3 +141,8 @@ func _update_upgrade_ui(show:bool):
 	game_control.visible = !show
 	color_filler.visible = true
 	upgrade_control.visible = show
+
+func update_in_hub_ui(show:bool):
+	game_control.visible = !show
+	color_filler.visible = false
+	upgrade_control.visible = false

@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/units/main-ship/ShipHub.gd" type="Script" id=1]
+[ext_resource path="res://sprites/units/main-ship-hub/main-ship-hub.png" type="Texture" id=2]
+
+[node name="ShipHub" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="ShipBody" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+collision_layer = 65536
+collision_mask = 65537
+mode = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D"]
+polygon = PoolVector2Array( -119, 31, -87, -2, -81, 4, -79, 4, -65, -10, -65, -16, -61, -20, -50, -20, -42, -12, -34, -21, -60, -47, -69, -47, -88, -29, -101, -42, -85, -59, -92, -68, -34, -128, -24, -120, -15, -128, -5, -128, -3, -125, 3, -125, 5, -128, 16, -128, 24, -120, 33, -129, 92, -70, 85, -61, 101, -43, 88, -29, 69, -47, 60, -47, 34, -20, 42, -12, 50, -20, 60, -20, 65, -15, 65, -10, 79, 4, 87, -2, 119, 30, 127, 25, 91, -11, 73, -11, 73, -20, 68, -25, 73, -29, 81, -20, 91, -20, 109, -38, 109, -64, 37, -137, 28, -137, 24, -132, 19, -137, -20, -137, -24, -132, -29, -137, -38, -137, -110, -65, -110, -56, -110, -47, -110, -38, -92, -20, -83, -20, -73, -29, -69, -25, -74, -20, -74, -10, -79, -6, -83, -11, -92, -11, -128, 25, -128, 34, -123, 38, -137, 53, -137, 79, -128, 87, -128, 97, -119, 106, -101, 106, -96, 101, -83, 115, -74, 115, -66, 106, -55, 115, -38, 115, -10, 88, -5, 94, 4, 94, 9, 88, 37, 115, 55, 115, 63, 106, 73, 115, 82, 115, 95, 102, 100, 106, 118, 106, 127, 97, 127, 87, 136, 79, 136, 52, 122, 38, 127, 34, 127, 25, 119, 30, 111, 39, 128, 56, 128, 75, 119, 83, 119, 93, 115, 97, 104, 97, 96, 88, 86, 88, 82, 84, 82, 73, 68, 59, 62, 59, 52, 70, -52, 70, -62, 59, -68, 59, -82, 73, -82, 84, -86, 88, -96, 88, -104, 97, -115, 97, -119, 93, -119, 83, -128, 74, -128, 56, -111, 39 )
+
+[node name="SpawnPosition" type="Position2D" parent="."]
+position = Vector2( 0, 10 )
+
+[node name="ShipZones" type="Node2D" parent="."]
+
+[node name="Zone1" type="Sprite" parent="ShipZones"]
+position = Vector2( -69, 27 )
+
+[node name="Zone2" type="Sprite" parent="ShipZones"]
+position = Vector2( -30, 46 )
+
+[node name="Zone3" type="Sprite" parent="ShipZones"]
+position = Vector2( 29, 47 )
+
+[node name="Zone4" type="Sprite" parent="ShipZones"]
+position = Vector2( 64, 24 )

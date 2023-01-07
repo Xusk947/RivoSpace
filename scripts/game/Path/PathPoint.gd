@@ -8,10 +8,8 @@ func _init(position:Vector2):
 	connections = []
 	
 func connect_point(path:PathPoint):
+	if connections.has(path): return
 	connections.append(path)
-	# Check if point already connected to this point we dont add it again
-	if path.connections.has(self): return
-	path.connections.append(self)
 
 func _to_string() -> String:
 	return "[PathPoint:" + String(get_instance_id()) + " " + String(int(pos.x * 100) / 100.0) + "," + String(int(pos.y * 100) / 100.0) + " ]"

@@ -100,6 +100,7 @@ func create_path_points():
 			previus_best_point.append(bestPoint)
 			var second_point = PathPoint.new(bestPoint.position)
 			path_point.connect_point(second_point)
+			second_point.connect_point(path_point)
 			# DEBUG ONLY | CREATE LINES BETWEEN CONNECTED POINTS
 			if debug:
 				var line = Line2D.new()

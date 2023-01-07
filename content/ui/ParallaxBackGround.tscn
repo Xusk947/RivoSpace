@@ -1,75 +1,89 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://sprites/backgrounds/background.png" type="Texture" id=1]
-[ext_resource path="res://sprites/backgrounds/stars-1.png" type="Texture" id=2]
+[ext_resource path="res://sprites/backgrounds/stars-1.png" type="Texture" id=1]
+[ext_resource path="res://sprites/backgrounds/stars-2.png" type="Texture" id=2]
 [ext_resource path="res://scripts/ui/ParallaxBackGround.gd" type="Script" id=3]
-[ext_resource path="res://sprites/backgrounds/stars-2.png" type="Texture" id=4]
+[ext_resource path="res://sprites/backgrounds/background.png" type="Texture" id=4]
 [ext_resource path="res://sprites/backgrounds/stars-3.png" type="Texture" id=5]
+[ext_resource path="res://sprites/backgrounds/star-dust-darken-1.png" type="Texture" id=6]
+[ext_resource path="res://content/shaders/HitShader.tres" type="Shader" id=8]
 
-[sub_resource type="Gradient" id=1]
-colors = PoolColorArray( 1, 0.87451, 0, 0.517647, 1, 0, 0, 1 )
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 8 )
+shader_param/hit_opacity = 0.101
+shader_param/color = Color( 0.0784314, 0.207843, 0.894118, 1 )
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 script = ExtResource( 3 )
-gradient = SubResource( 1 )
+material = SubResource( 1 )
+modulate = Color( 0.0784314, 0.207843, 0.894118, 1 )
+opacity = 0.101
 
 [node name="Background" type="ParallaxLayer" parent="."]
-motion_mirroring = Vector2( 2048, 2048 )
+material = SubResource( 1 )
+motion_mirroring = Vector2( 1280, 720 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Background"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 1 )
+use_parent_material = true
+texture = ExtResource( 4 )
 centered = false
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="StarsSlow" type="ParallaxLayer" parent="."]
+material = SubResource( 1 )
+use_parent_material = true
 motion_scale = Vector2( 0.2, 0.2 )
 motion_mirroring = Vector2( 2048, 2048 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Stars-1" type="Sprite" parent="StarsSlow"]
-position = Vector2( 1024, 1024 )
-scale = Vector2( 4, 4 )
-texture = ExtResource( 2 )
+[node name="Sprite" type="Sprite" parent="StarsSlow"]
+use_parent_material = true
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="StarDust" type="ParallaxLayer" parent="."]
+material = SubResource( 1 )
+motion_scale = Vector2( 0.4, 0.4 )
+motion_mirroring = Vector2( 2048, 2048 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="StarDust"]
+use_parent_material = true
+scale = Vector2( 2, 2 )
+texture = ExtResource( 6 )
+centered = false
 
 [node name="StarsNormal" type="ParallaxLayer" parent="."]
+material = SubResource( 1 )
 motion_scale = Vector2( 0.5, 0.5 )
 motion_mirroring = Vector2( 2048, 2048 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Stars-2" type="Sprite" parent="StarsNormal"]
-position = Vector2( 649, 1179 )
+[node name="Sprite" type="Sprite" parent="StarsNormal"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
-texture = ExtResource( 5 )
+texture = ExtResource( 2 )
+centered = false
 
 [node name="StarsFast" type="ParallaxLayer" parent="."]
+material = SubResource( 1 )
 motion_scale = Vector2( 0.9, 0.9 )
 motion_mirroring = Vector2( 2048, 2048 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Stars-1" type="Sprite" parent="StarsFast"]
-position = Vector2( 887, 732 )
+[node name="Sprite" type="Sprite" parent="StarsFast"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
-texture = ExtResource( 4 )
-
-[node name="Stars-2" type="Sprite" parent="StarsFast"]
-position = Vector2( 1432, 1633 )
-scale = Vector2( 2, 2 )
-texture = ExtResource( 4 )
-
-[node name="StarDust" type="ParallaxLayer" parent="."]
-motion_mirroring = Vector2( 2048, 2048 )
-__meta__ = {
-"_edit_lock_": true
-}
+texture = ExtResource( 5 )
+centered = false

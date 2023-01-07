@@ -27,7 +27,7 @@ script = ExtResource( 1 )
 max_health = 10000.0
 max_speed = 250.0
 max_energy = 1000.0
-rotation_speed = 1.0
+rotation_speed = 10.0
 energy_regeneration = 1.0
 
 [node name="Shape" type="CollisionShape2D" parent="."]

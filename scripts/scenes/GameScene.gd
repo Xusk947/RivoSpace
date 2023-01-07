@@ -67,19 +67,6 @@ func spawn_path(data:PathData):
 	GameManager.path_data = data
 	var path:PathData = data.get_rescaled(distance)
 	# Set Path Data to GameManager Path Data Holder variable
-	
-	for point in path.path_points.duplicate():
-		var rect:ColorRect = ColorRect.new()
-		rect.rect_size = Vector2(50, 50)
-		rect.modulate = Color.pink
-		rect.set_position(point.pos - Vector2(25, 25))
-		for i in len(point.connections):
-			var p2:PathPoint = point.connections[i]
-			var line:Line2D = Line2D.new()
-			line.add_point(point.pos)
-			line.add_point(p2.pos)
-			add_child(line)
-		add_child(rect)
 	_spawn_main_ship(data.start_point.pos)
 # TODO: Move Add WaveSpawner.gd
 func spawn_wave():

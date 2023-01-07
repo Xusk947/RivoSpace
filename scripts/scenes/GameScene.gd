@@ -4,7 +4,7 @@ class_name GameScene
 # Canvas | Display all UI
 onready var canvas:CanvasLayer = $CanvasLayer
 # Color Rect | A slightly hide game objects on scene
-onready var  color_filler:ColorRect = $CanvasLayer/ColorFiller
+onready var  color_filler:ColorFiller = $CanvasLayer/ColorFiller
 # Control Node | says to player his health exp and etc..
 onready var game_control:Control = $CanvasLayer/Menu/MainContainer/GameControl
 # Control Node | contains nodes when player choose new upgrade
@@ -22,7 +22,6 @@ var star_path:PathSpawner
 
 func _ready():
 	Events.connect("card_selected", self, "_on_card_select")
-	color_filler.visible = false
 	Res.reset_cards_out()
 	_init_background()
 	_init_star_map()
@@ -43,8 +42,10 @@ func _add_wave_spawner():
 func _spawn_main_ship(pos:Vector2):
 	var unit = _spawn_unit(pos, Res.main_ship_unit)
 	unit.controller_script = Res.main_ship
+	if unit.controller:
+		GameManager.current_point = GameManager.path_data.start_point
 	unit.add()
-	unit.position = Vector2(30, 0)
+	unit.position = pos * Difficult.get_difficult(Difficult.NORMAL).distance
 	
 	return unit
 ## Stop or Resume all children processing mode
@@ -59,9 +60,27 @@ func _on_card_select(card):
 	GameManager.add_card(card, Res.team_alien)
 	_remove_cards()
 	set_child_process(true)
+
 func spawn_path(data:PathData):
-	var main_ship:Unit = _spawn_main_ship(data.start_point.pos)
+	# Rescale All points
+	var distance = Difficult.get_difficult(Difficult.NORMAL).distance
+	GameManager.path_data = data
+	var path:PathData = data.get_rescaled(distance)
+	# Set Path Data to GameManager Path Data Holder variable
 	
+	for point in path.path_points.duplicate():
+		var rect:ColorRect = ColorRect.new()
+		rect.rect_size = Vector2(50, 50)
+		rect.modulate = Color.pink
+		rect.set_position(point.pos - Vector2(25, 25))
+		for i in len(point.connections):
+			var p2:PathPoint = point.connections[i]
+			var line:Line2D = Line2D.new()
+			line.add_point(point.pos)
+			line.add_point(p2.pos)
+			add_child(line)
+		add_child(rect)
+	_spawn_main_ship(data.start_point.pos)
 # TODO: Move Add WaveSpawner.gd
 func spawn_wave():
 	var wave = _get_wave()
@@ -98,13 +117,14 @@ func _process(_delta):
 		unit.controller_script = Res.alien
 		unit.add()
 	if Input.is_key_pressed(KEY_K) and GameManager.players.size() <= 1:
-		var unit = _spawn_unit(get_global_mouse_position())
+		var unit = _spawn_unit(get_global_mouse_position(), Res.trasher)
 		unit.controller_script = Res.player
 		unit.add()
-
-## Spawn unit node on given position 
+		
+		## Spawn unit node on given position 
 func _spawn_unit(pos:Vector2, unit_folder:String = Res.unit):
 	var unit:Unit = Pool.take_node(unit_folder)
+	unit.velocity = Vector2.ZERO
 	unit.position = pos
 	unit.rotation = 0
 	return unit
@@ -116,7 +136,7 @@ func _spawn_cards():
 		card_holder.add_child(card)
 		card_to_spawn.append(card)
 		
-	_update_upgrade_ui(true)
+	show_upgrade_ui()
 # Remove All CardHolders when player select card
 func _remove_cards():
 	for child in card_holder.get_children():
@@ -125,24 +145,24 @@ func _remove_cards():
 			child.modulate.a = 1
 		card_holder.remove_child(child)
 		
-	_update_game_ui(true)
+	show_game_ui()
 # Create CardHolder with prepared Card instance
 func _get_card():
 	var card:CardHolder = Pool.take_node(Res.card_holder)
 	card.card = Res.drop_card()
 	return card
 # Show Game Screen UI and Hide others
-func _update_game_ui(show:bool):
-	game_control.visible = show
-	color_filler.visible = false
-	upgrade_control.visible = !show
+func show_game_ui():
+	game_control.visible = true
+	color_filler.need_hide = true
+	upgrade_control.visible = false
 # Show Cards Selection UI and Hide others
-func _update_upgrade_ui(show:bool):
-	game_control.visible = !show
-	color_filler.visible = true
-	upgrade_control.visible = show
+func show_upgrade_ui():
+	game_control.visible = false
+	color_filler.need_hide = false
+	upgrade_control.visible = true
 
-func update_in_hub_ui(show:bool):
-	game_control.visible = !show
-	color_filler.visible = false
+func show_in_hub_ui():
+	game_control.visible = false
+	color_filler.need_hide = true
 	upgrade_control.visible = false

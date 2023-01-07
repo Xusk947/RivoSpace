@@ -10,5 +10,5 @@ func entter():
 func out():
 	pass
 
-func _process(delta):
+func _process(_delta):
 	pass

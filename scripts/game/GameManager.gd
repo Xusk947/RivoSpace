@@ -11,11 +11,14 @@ var enemies:Array = []
 # Card Region
 var selected_cards:Array = []
 var cards:Dictionary = {}
-
 var camera:FollowingCamera2D
 
 var area:Area2D # Need for Fast Physics check
 var shape:CollisionShape2D 
+# Data Container
+var path_data:PathData
+var current_point:PathPoint
+var move_to_point:PathPoint
 
 func _ready():
 	area = Area2D.new()
@@ -37,9 +40,10 @@ func get_enemy():
 	if enemies.size() > 0:
 		return enemies[0]
 	return null
+# TODO: Add find units in special radius
 ## Return closest enemy unit from given unit
 ## In Saved enemy array
-func get_closest_enemy(unit:Unit, radius = 250):
+func get_closest_enemy(unit:Unit, _radius = 250):
 	if enemies.size() > 0:
 		var best = enemies[0]
 		var dst2:float = 999999
@@ -51,8 +55,8 @@ func get_closest_enemy(unit:Unit, radius = 250):
 					dst2 = enemy_dst2
 		return best
 	return null
-
-func get_closest_alien(unit:Unit, radius = 250):
+# TODO: Add find units in special radius
+func get_closest_alien(unit:Unit, _radius = 250):
 	if aliens.size() > 0:
 		var best = aliens[0]
 		var dst2:float = 999999

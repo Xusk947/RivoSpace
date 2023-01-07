@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/units/main-ship/ShipHub.gd" type="Script" id=1]
 [ext_resource path="res://sprites/units/main-ship-hub/main-ship-hub.png" type="Texture" id=2]
+[ext_resource path="res://sprites/entities/star-display.png" type="Texture" id=3]
 
 [node name="ShipHub" type="Node2D"]
 script = ExtResource( 1 )
@@ -33,3 +34,7 @@ position = Vector2( 29, 47 )
 
 [node name="Zone4" type="Sprite" parent="ShipZones"]
 position = Vector2( 64, 24 )
+
+[node name="Display" type="Sprite" parent="."]
+position = Vector2( 0, -109 )
+texture = ExtResource( 3 )

@@ -30,7 +30,7 @@ func _process(delta):
 			if wave.finished:
 				current_waves.erase(wave)
 
-func _get_boss_wave(hardness:int = 0):
+func _get_boss_wave(_hardness:int = 0):
 	return []
 
 func _get_difficult_wave():
@@ -53,17 +53,17 @@ class Wave:
 	var _units_spawned:int = 0
 	var _timer:float
 	var spawn_sides:Array
+	# Unit, Amount of units, delay between waves
+	func _init(u:String, a:int, d:float, sides:Array = []):
+		unit = u
+		amount = a
+		delay = d
+		_timer = 0.0
+		spawn_sides = sides
+		_spawned = false
 	
-	func _init(unit:String, amount:int, delay:float, sides:Array = []):
-		self.unit = unit
-		self.amount = amount
-		self.delay = delay
-		self._timer = 0.0
-		self.spawn_sides = sides
-		self._spawned = false
-	
-	func start(spawner:WaveSpawner):
-		self.spawner = spawner
+	func start(s:WaveSpawner):
+		self.spawner = s
 		self._spawned = true
 
 	func _process(delta:float):
@@ -71,10 +71,10 @@ class Wave:
 		_timer -= delta
 		if _timer < 0:
 			_timer = delay
-			var unit:Unit = Pool.take_node(unit)
-			var screen_size = GameManager.get_player().get_viewport().get_visible_rect().size
-			unit.position = GameManager.get_player().position
-			unit.add()
+			var spawned_unit:Unit = Pool.take_node(unit)
+			#var screen_size = GameManager.get_player().get_viewport().get_visible_rect().size
+			spawned_unit.position = GameManager.get_player().position
+			spawned_unit.add()
 			_units_spawned += 1
 			if _units_spawned == amount:
 				finished = true

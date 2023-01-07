@@ -25,9 +25,9 @@ collision_layer = 15
 collision_mask = 4
 script = ExtResource( 1 )
 max_health = 10000.0
-move_speed = 2.5
 max_speed = 250.0
 max_energy = 1000.0
+rotation_speed = 1.0
 energy_regeneration = 1.0
 
 [node name="Shape" type="CollisionShape2D" parent="."]
@@ -80,4 +80,5 @@ collision_mask = 4
 monitorable = false
 
 [node name="Shape" type="CollisionShape2D" parent="ShipEntterZone"]
+visible = false
 shape = SubResource( 5 )

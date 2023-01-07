@@ -21,9 +21,10 @@ var finished:bool = false # In Main loop used to check when it ready for use
 
 func _ready():
 	points = [] # Create Empty Array
+	randomize()
 	spawn_path() # Start Spawn Generation
 # Used only when points added to Create Boubles
-func _physics_process(delta):
+func _physics_process(_delta):
 	for i in points.size():
 		var point:RigidBody2D = points[i]
 		# When one of all points is sleeping we start connecting them
@@ -38,13 +39,13 @@ func create_path_points():
 	path_positions = []
 	special_points = []
 	# Set Start point
-	var smallest_shape:CollisionShape2D = points[0].get_child(0)
+	start_point = points[0]
 	# Iterate every Point on them Map and find circle with smallest radius
 	for i in points.size():
 		var point:CollisionShape2D = points[i].get_child(0)
 		# Check if best point radius less than current
-		if point.shape.radius < smallest_shape.shape.radius:
-			smallest_shape = point
+		if point.shape.radius < start_point.get_child(0).shape.radius:
+			start_point = point.get_parent()
 			# Set Best point to current
 			start_point = points[i]
 	# Distance for start point to finish point
@@ -53,6 +54,12 @@ func create_path_points():
 	for i in points.size():
 		var point:RigidBody2D = points[i]
 		# Skip if start point equal to them self
+		randomize()
+		if start_point == null: 
+			for child in get_children():
+				remove_child(child)
+			spawn_path()
+			return
 		if point == start_point: continue
 		if point.position.distance_squared_to(start_point.position) > farrest_distance:
 			# Set distance/finish_point to distance/point between this point and start point
@@ -72,6 +79,7 @@ func create_path_points():
 		var previus_best_point = []
 		previus_best_point.append(points[i])
 		# Every Point can connect only with 2 members, setted by value 2
+		var path_point = PathPoint.new(point.position)
 		for k in 2:
 			# 9999 * 9999 in square distance
 			var min_dst = 99980001
@@ -90,10 +98,8 @@ func create_path_points():
 					min_dst = dst
 					bestPoint = point2
 			previus_best_point.append(bestPoint)
-			var path_point = PathPoint.new(point.position)
 			var second_point = PathPoint.new(bestPoint.position)
 			path_point.connect_point(second_point)
-			path_points.append(path_point)
 			# DEBUG ONLY | CREATE LINES BETWEEN CONNECTED POINTS
 			if debug:
 				var line = Line2D.new()
@@ -101,6 +107,8 @@ func create_path_points():
 				line.add_point(point.position, 0)
 				line.add_point(bestPoint.position, 0)
 				add_child(line)
+		# Add point to Array of points
+		path_points.append(path_point)
 		# DEBUG ONLY | CREATE SPRITES ON POINT POSITIONS
 		if debug:
 			var sprite = Sprite.new()
@@ -122,13 +130,35 @@ func create_path_points():
 
 func add_path_data():
 	# Create Special DataContainer for Path
-	var path_data = PathData.new(path_points)
+	var path_data = PathData.new()
+	path_data.set_path_points(path_points)
 	path_data.set_start_point(start_point)
 	path_data.set_shop_point(shop_point)
 	path_data.set_special_points(special_points)
 	path_data.set_finish_point(finish_point)
-	return path_data
 	
+	var min_x:float = 99999
+	var min_y:float = 99999
+	var max_x:float = 0
+	var max_y:float = 0
+	# Calculate Points width/height to divide all points on this value
+	for point in path_data.path_points:
+		if point.pos.x < min_x:
+			min_x = point.pos.x
+		if point.pos.x > max_x:
+			max_x = point.pos.x
+		if point.pos.y < min_y:
+			min_y = point.pos.y
+		if point.pos.y > max_y:
+			max_y = point.pos.y
+	# Set Every Point Position Between -1 and 1
+	for point in path_data.path_points:
+		point.pos.x = point.pos.x / max_x
+		point.pos.y = point.pos.y / max_y
+		for con in point.connections:
+			con.pos.x = con.pos.x / max_x
+			con.pos.y = con.pos.y / max_y
+	return path_data
 
 func choose_point_except_used():
 	# Search Through all Points and find Free one

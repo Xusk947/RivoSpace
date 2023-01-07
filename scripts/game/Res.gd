@@ -10,12 +10,13 @@ const VFX = "res://content/entities/VFX.tscn"
 const player_character = "res://content/entities/PlayerCharacter.tscn"
 const background:PackedScene = preload("res://content/ui/ParallaxBackGround.tscn")
 const path_spawner = preload("res://content/scenes/PathSpawner.tscn")
+const path_map = preload("res://content/ui/PathMap.tscn")
 # Units
 const unit = "res://content/units/Unit.tscn" # UNIT BASE LOAD FROM PULL AUTOMATICLY
 const trasher = "res://content/units/Trasher.tscn"
 const sharp = "res://content/units/Sharp.tscn"
 const main_ship_unit = "res://content/units/MainShip.tscn"
-
+const path_sprite = "res://content/ui/PathSprite.tscn"
 # Unit Controllers
 const unit_script = preload("res://scripts/units/Unit.gd")
 const default_controller = preload("res://scripts/units/controllers/Controller.gd")
@@ -34,6 +35,10 @@ const basic_card = preload("res://content/cards/basic-card.tres") # Used when cr
 
 var cards_to_drop:Array = []
 const all_cards = [] # Containes All loaded Cards
+
+# Shader Material
+const hit_fx_material:Material = preload("res://content/shaders/HitShaderMat.tres")
+const heal_shader_material:Material = preload("res://content/shaders/HealShaderMat.tres")
 
 # Team
 const team_alien = Color.orange

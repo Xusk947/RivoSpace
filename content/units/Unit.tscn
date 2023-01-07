@@ -29,6 +29,7 @@ shape = SubResource( 3 )
 texture = ExtResource( 3 )
 
 [node name="WeaponHolder" type="Node2D" parent="."]
+use_parent_material = true
 
 [node name="Weapon" type="Sprite" parent="WeaponHolder"]
 position = Vector2( 0, 15 )

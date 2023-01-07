@@ -1,0 +1,17 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+uniform float opacity = 0;
+uniform vec4 color:hint_color = vec4(0, 1, 0, 1);
+
+void fragment() {
+	vec2 uvs = UV;
+	float pos = cos(TIME * 2.0) / 1.5 + 0.5;
+	if (uvs.x > pos - 0.15 && uvs.x < pos + 0.15) {
+		COLOR.rgb = texture(TEXTURE, UV).rgb * (1.0 - opacity) + color.rgb * opacity;
+		COLOR.a = texture(TEXTURE, UV).a;
+	} else {
+		COLOR = texture(TEXTURE, UV);
+	}
+}"

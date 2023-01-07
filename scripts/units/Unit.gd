@@ -19,8 +19,9 @@ var can_shoot:bool = false # if unit can't shoot weapons will not shooting
 var moving:bool = false setget _set_moving, _get_moving # says us unit is moving or no
 var rotation_dir:float # from -1 to 1 describe current unit rotation angle
 var team:Color = Color.white setget _set_team, _get_team
+var hit_delay:float = 0.0 setget _set_hit_delay, _get_hit_delay; # HitShader
 
-var sprite_name:String
+var sprite_name:String # Name of this Sprite
 
 onready var body:Sprite = $Body # Main Sprite
 onready var shape:CollisionShape2D = $Shape # Collision Shape
@@ -47,17 +48,23 @@ func _ready():
 	_init_outline()
 	_init_weapon()
 	_inited = true
+
 func _reset_variables():
 	health = max_health
 	energy = max_energy
+	self.hit_delay = 0.0;
 # For future : TODO IDK
 func _create_constructor():
 	pass
 # Load outline from Sprite if sprite.name + "-outline" exist
 func _init_outline():
+	material = Res.hit_fx_material.duplicate()
+	body.use_parent_material = true
+	
 	var outline_sprite_new = Sprite.new()
 	var path = self.body.texture.resource_path
 	path = path.replace(".png", "-outline.png")
+	
 	var file = File.new()
 	if file.file_exists(path):
 		outline_sprite_new.texture = load(path)
@@ -67,11 +74,13 @@ func _init_outline():
 		add_child_below_node(body, outline)
 # Add all weapons in Weapon Holder Node to Array
 func _init_weapon():
+	_weapon_holder.use_parent_material = true
 	var children = _weapon_holder.get_children()
 	weapons = []
 	for child in children:
 		weapons.append(child)
 		child.unit = self
+		child.use_parent_material = true
 
 func _physics_process(delta):
 	# Movement Friction, so that unit does not move indefinitely with it velocity 
@@ -86,6 +95,10 @@ func _physics_process(delta):
 	# Clamp Velocity to max_speed
 	velocity.x = clamp(velocity.x, -max_calculated_speed, max_calculated_speed)
 	velocity.y = clamp(velocity.y, -max_calculated_speed, max_calculated_speed)
+	# When Unit is Hitted
+	if (hit_delay > 0):
+		self.hit_delay -= delta * 5
+
 # Abstract Void
 func _update_controller(_delta):
 	pass
@@ -136,6 +149,7 @@ func move_by_rotation():
 # Apply Damage, and check if unit can die
 func apply_damage(damage:float):
 	health -= damage
+	self.hit_delay = 1.0
 	if health < 0:
 		kill()
 # When we disable unit we need to disable controller too
@@ -234,3 +248,11 @@ func _set_team(v:Color):
 
 func _get_team() -> Color:
 	return team
+
+func _set_hit_delay(v:float):
+	hit_delay = v
+	if (self.material):
+		self.material.set("shader_param/hit_opacity", hit_delay)
+	
+func _get_hit_delay():
+	return hit_delay

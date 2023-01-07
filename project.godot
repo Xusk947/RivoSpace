@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/ui/CardHolder.gd"
 }, {
+"base": "ColorRect",
+"class": "ColorFiller",
+"language": "GDScript",
+"path": "res://scripts/ui/ColorFiller.gd"
+}, {
 "base": "Node2D",
 "class": "Controller",
 "language": "GDScript",
@@ -89,6 +94,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/game/Path/PathData.gd"
 }, {
+"base": "Node2D",
+"class": "PathMap",
+"language": "GDScript",
+"path": "res://scripts/ui/PathMap.gd"
+}, {
 "base": "Reference",
 "class": "PathPoint",
 "language": "GDScript",
@@ -98,6 +108,11 @@ _global_script_classes=[ {
 "class": "PathSpawner",
 "language": "GDScript",
 "path": "res://scripts/game/Path/PathSpawner.gd"
+}, {
+"base": "Sprite",
+"class": "PathSprite",
+"language": "GDScript",
+"path": "res://scripts/game/Path/PathSprite.gd"
 }, {
 "base": "Controller",
 "class": "Player",
@@ -156,6 +171,7 @@ _global_script_class_icons={
 "BulletType": "",
 "Card": "",
 "CardHolder": "",
+"ColorFiller": "",
 "Controller": "",
 "Enemy": "",
 "Energy": "",
@@ -166,8 +182,10 @@ _global_script_class_icons={
 "HealthBar": "",
 "MainShip": "",
 "PathData": "",
+"PathMap": "",
 "PathPoint": "",
 "PathSpawner": "",
+"PathSprite": "",
 "Player": "",
 "PlayerCharacter": "",
 "SceneHolder": "",
@@ -196,6 +214,7 @@ Angles="*res://scripts/math/Angles.gd"
 Res="*res://scripts/game/Res.gd"
 Events="*res://scripts/game/Events.gd"
 Pool="*res://scripts/game/Pool.gd"
+Difficult="*res://scripts/game/Difficult.gd"
 GameManager="*res://scripts/game/GameManager.gd"
 Debug="*res://scripts/utils/Debug.gd"
 

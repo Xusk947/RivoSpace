@@ -3,8 +3,6 @@ class_name MainShip
 
 var spawn_point:Position2D # Point when player will be spawned
 var path_data:PathData # Path data for ship movement and showing in PathScreen
-var current_point:PathPoint # In which point main ship start movement
-var move_to_point:PathPoint # End point of main ship movement
 var ship_hub:ShipHub # Ship hub / area for interactions
 var energy_charge_zone:Area2D # Zone when Aliens ship can charge their battery
 var ship_entter_zone:Area2D # When player entter in this zone, player ship start animation
@@ -65,8 +63,31 @@ func _process(delta):
 		spawn_player_from_hub(player_character)
 		ship_hub.players_to_spawn.erase(player_character)
 	# TODO: Add movement by path
-	unit.velocity = Vector2(0, -10)
-	# Iterate all units in charge zone and charge them
+	unit.moving = false
+	if GameManager.current_point && GameManager.move_to_point:
+		# Get target point global position
+		var point_world_position = GameManager.move_to_point.pos * Difficult.get_difficult(Difficult.NORMAL).distance
+		# Calculate distance between target point and unit position
+		var dst = unit.position.distance_to(point_world_position)
+		
+		if dst > 300:
+			# Rotate from current point to point where unit will be go
+			var angle = point_world_position.angle_to_point(unit.position) + deg2rad(90)
+			unit.rotate_to(angle, unit.rotation_speed * Angles.degg2rad * delta)
+			
+			var angle_dist = Angles.angle_dist(unit.rotation - 1.5708, angle)
+			
+			unit.moving = true
+			unit.move_by_rotation()
+		else:
+			unit.velocity *= 0.98
+			if unit.velocity.length() < 1:
+				GameManager.current_point = GameManager.move_to_point
+				GameManager.move_to_point = null
+				ship_hub.path_map.update_points_color()
+				
+		
+	# Iterate all units in charge zone and charge them;
 	for transfer_unit in _units_in_charge_zone:
 		# Charge Unit by 1%
 		var power = transfer_unit.max_energy / 100
@@ -94,8 +115,10 @@ func spawn_player_from_hub(player_character:PlayerCharacter):
 	player.set_process(true)
 	player.set_physics_process(true)
 	player.visible = true
+	player.modulate.a = 1.0 # Unit move to ShipHub when modulate equal to 0, we change it to 1.0
 	player.position = spawn_point.global_position
 	# Set Camera to Player Ship when it Spawned
+	Pool.return_node(player_character)
 	GameManager.camera.set_target(player, 1)
 
 func _target_update(_delta):
@@ -124,6 +147,7 @@ func _unit_out_from_charge_zone(_rid:RID, body:Node, body_shape_idx, _local_shap
 		# Check if Alien Unit exist in Array we erase it after
 		if _units_in_charge_zone.has(collision_unit):
 			_units_in_charge_zone.erase(collision_unit)
+
 func _unit_entter_to_ship_entter_zone(_rid:RID, body:Node, body_shape_idx, _local_shape_idx):
 	var collision_unit:Unit = _get_unit(body, body_shape_idx)
 	# Null Check

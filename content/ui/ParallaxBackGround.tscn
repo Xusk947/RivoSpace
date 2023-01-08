@@ -1,43 +1,43 @@
 [gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://sprites/backgrounds/stars-1.png" type="Texture" id=1]
-[ext_resource path="res://sprites/backgrounds/stars-2.png" type="Texture" id=2]
+[ext_resource path="res://sprites/backgrounds/scaled/star-dust-darken-3-scaled.png" type="Texture" id=1]
+[ext_resource path="res://sprites/backgrounds/scaled/stars-1-scaled.png" type="Texture" id=2]
 [ext_resource path="res://scripts/ui/ParallaxBackGround.gd" type="Script" id=3]
 [ext_resource path="res://sprites/backgrounds/background.png" type="Texture" id=4]
-[ext_resource path="res://sprites/backgrounds/stars-3.png" type="Texture" id=5]
-[ext_resource path="res://sprites/backgrounds/star-dust-darken-1.png" type="Texture" id=6]
-[ext_resource path="res://sprites/backgrounds/stars-6.png" type="Texture" id=7]
+[ext_resource path="res://sprites/backgrounds/scaled/star-dust-darken-4-scaled.png" type="Texture" id=5]
+[ext_resource path="res://sprites/backgrounds/scaled/star-dust-5-scaled.png" type="Texture" id=6]
+[ext_resource path="res://sprites/backgrounds/scaled/star-dust-4-scaled.png" type="Texture" id=7]
 [ext_resource path="res://content/shaders/HitShader.tres" type="Shader" id=8]
-[ext_resource path="res://sprites/backgrounds/stars-5.png" type="Texture" id=9]
-[ext_resource path="res://sprites/backgrounds/star-dust-darken-5.png" type="Texture" id=10]
-[ext_resource path="res://sprites/backgrounds/star-dust-darken-4.png" type="Texture" id=11]
-[ext_resource path="res://sprites/backgrounds/star-dust-darken-2.png" type="Texture" id=12]
-[ext_resource path="res://sprites/backgrounds/star-dust-darken-3.png" type="Texture" id=13]
-[ext_resource path="res://sprites/backgrounds/star-dust-5.png" type="Texture" id=14]
-[ext_resource path="res://sprites/backgrounds/stars-4.png" type="Texture" id=15]
-[ext_resource path="res://sprites/backgrounds/star-dust-2.png" type="Texture" id=16]
-[ext_resource path="res://sprites/backgrounds/star-dust-3.png" type="Texture" id=17]
-[ext_resource path="res://sprites/backgrounds/star-dust-4.png" type="Texture" id=18]
-[ext_resource path="res://sprites/backgrounds/star-dust-1.png" type="Texture" id=19]
+[ext_resource path="res://sprites/backgrounds/scaled/star-dust-darken-2-scaled.png" type="Texture" id=9]
+[ext_resource path="res://sprites/backgrounds/scaled/stars-3-scaled.png" type="Texture" id=10]
+[ext_resource path="res://sprites/backgrounds/scaled/stars-6-scaled.png" type="Texture" id=11]
+[ext_resource path="res://sprites/backgrounds/scaled/star-dust-3-scaled.png" type="Texture" id=12]
+[ext_resource path="res://sprites/backgrounds/scaled/star-dust-2-scaled.png" type="Texture" id=13]
+[ext_resource path="res://sprites/backgrounds/scaled/star-dust-darken-5-scaled.png" type="Texture" id=14]
+[ext_resource path="res://sprites/backgrounds/scaled/stars-2-scaled.png" type="Texture" id=15]
+[ext_resource path="res://sprites/backgrounds/scaled/star-dust-1-scaled.png" type="Texture" id=16]
+[ext_resource path="res://sprites/backgrounds/scaled/star-dust-darken-1-scaled.png" type="Texture" id=17]
+[ext_resource path="res://sprites/backgrounds/scaled/stars-5-scaled.png" type="Texture" id=18]
+[ext_resource path="res://sprites/backgrounds/scaled/stars-4-scaled.png" type="Texture" id=19]
 
 [sub_resource type="ShaderMaterial" id=1]
+render_priority = 1
 shader = ExtResource( 8 )
-shader_param/hit_opacity = 0.102
-shader_param/color = Color( 0.0784314, 0.207843, 0.894118, 1 )
+shader_param/hit_opacity = 0.392
+shader_param/color = Color( 0, 0.0431373, 0.258824, 1 )
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 script = ExtResource( 3 )
 material = SubResource( 1 )
-modulate = Color( 0.0784314, 0.207843, 0.894118, 1 )
-opacity = 0.102
-slow_stars_scroll = 0.4
-star_dust_scroll = 0.4
-stars = [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 15 ), ExtResource( 9 ), ExtResource( 7 ) ]
-dust = [ ExtResource( 19 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 14 ) ]
-dark_dust = [ ExtResource( 6 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 11 ), ExtResource( 10 ) ]
+modulate = Color( 0, 0.0431373, 0.258824, 1 )
+opacity = 0.392
+stars = [ ExtResource( 2 ), ExtResource( 15 ), ExtResource( 10 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 11 ) ]
+dust = [ ExtResource( 16 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 7 ), ExtResource( 6 ) ]
+dark_dust = [ ExtResource( 17 ), ExtResource( 9 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 14 ) ]
 
 [node name="Background" type="ParallaxLayer" parent="."]
 material = SubResource( 1 )
+use_parent_material = true
 motion_mirroring = Vector2( 1280, 720 )
 __meta__ = {
 "_edit_lock_": true

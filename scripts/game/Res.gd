@@ -52,7 +52,8 @@ const ride_fx = "res://content/fx/RideFx.tscn"
 var unit_death_vfx:Array = [
 	preload("res://sounds/fx/Explosion-1.wav")
 ]
-
+var engines_slow_down_vfx:AudioStream = preload("res://sounds/fx/Engines-slow-down.wav")
+var star_path_select_vfx:AudioStream = preload("res://sounds/fx/Star-path-select.wav")
 var card_select:AudioStream = preload("res://sounds/fx/Card-Select-1.wav")
 var card_apply:AudioStream = preload("res://sounds/fx/Card-Apply.wav")
 var level_up:AudioStream = preload("res://sounds/fx/Powerup.wav")

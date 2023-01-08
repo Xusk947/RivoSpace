@@ -91,11 +91,12 @@ func add_card(card:Card, team:Color):
 	get_card(team).add(card)
 	selected_cards.append(card)
 
-func play_sound(audio:AudioStream, position:Vector2 = Vector2.ZERO):
+func play_sound(audio:AudioStream, position:Vector2 = Vector2.ZERO, volume:float = 0.2):
 	var stream:VFX = Pool.take_node(Res.VFX)
-	add_child(stream)
+	stream.volume_db = volume
 	stream.stream = audio
 	stream.position = position
+	add_child(stream)
 	
 	stream.play()
 func get_card(team:Color) -> Card: 

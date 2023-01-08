@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/units/Unit.gd" type="Script" id=1]
 [ext_resource path="res://content/fx/FlyFx.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://content/units/weapons/basic.tres" type="Resource" id=5]
 [ext_resource path="res://sprites/units/weapons/basic-weapon.png" type="Texture" id=6]
 [ext_resource path="res://content/units/main-ship/ShipHub.tscn" type="PackedScene" id=7]
+[ext_resource path="res://sounds/fx/Main-ship-moving.wav" type="AudioStream" id=8]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 130.0
@@ -25,7 +26,7 @@ collision_layer = 15
 collision_mask = 4
 script = ExtResource( 1 )
 max_health = 10000.0
-max_speed = 250.0
+max_speed = 1000.0
 max_energy = 1000.0
 rotation_speed = 10.0
 energy_regeneration = 1.0
@@ -56,7 +57,7 @@ amount = 16
 lifetime_randomness = 0.1
 fract_delta = false
 initial_velocity = 300.0
-scale_amount = 7.0
+scale_amount = 3.0
 scale_amount_curve = SubResource( 2 )
 color = Color( 0.705882, 0.12549, 0.164706, 1 )
 
@@ -82,3 +83,7 @@ monitorable = false
 [node name="Shape" type="CollisionShape2D" parent="ShipEntterZone"]
 visible = false
 shape = SubResource( 5 )
+
+[node name="EngineAudioStream" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 0, 95 )
+stream = ExtResource( 8 )

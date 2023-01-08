@@ -217,6 +217,7 @@ Pool="*res://scripts/game/Pool.gd"
 Difficult="*res://scripts/game/Difficult.gd"
 GameManager="*res://scripts/game/GameManager.gd"
 Debug="*res://scripts/utils/Debug.gd"
+Vars="*res://scripts/game/Vars.gd"
 
 [display]
 

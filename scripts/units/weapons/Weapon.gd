@@ -32,7 +32,7 @@ func _timer_up():
 		for i in (type.shots + unit.card.bullet_adding): # Iterate all #WeaponType.shots at once
 			_shoot(type.shoot_cone + unit.card.weapon_shoot_cone_adding)
 		if len(type.shoot_sounds) > 0: # When shoot create #WeaponType shoot sound if exist
-			GameManager.play_sound(type.shoot_sounds[rand_range(0, len(type.shoot_sounds))], unit.position)
+			GameManager.play_sound(type.shoot_sounds[rand_range(0, len(type.shoot_sounds))], unit.position, -25)
 
 # Check for unit energy and unit state (can shoot) and last check for unit target if it exist
 func can_shoot() -> bool:

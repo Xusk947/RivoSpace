@@ -6,16 +6,20 @@ var path_data:PathData # Path data for ship movement and showing in PathScreen
 var ship_hub:ShipHub # Ship hub / area for interactions
 var energy_charge_zone:Area2D # Zone when Aliens ship can charge their battery
 var ship_entter_zone:Area2D # When player entter in this zone, player ship start animation
-
+var engine_audio_stream:AudioStreamPlayer2D # Main Ship Engine Audio Strem
 var _units_in_charge_zone:Array # Array with Ships to Charge
 var _units_in_entter_zone:Array # Array with Players to Entter in Ship hub
+var _slow_down_sound_played:bool # Activates when unit close to point and slow down ship
 
 func on_add():
 	name = "MainShipController"
 	# Find Spawn Point Node
 	spawn_point = unit.find_node("UnitSpawnPoint", false)
-	# Find Ship Hub node in Main Ship Unit
+	# Find Ship Hub node
 	ship_hub = unit.find_node("ShipHub", false)
+	# Find Engine Audio Stream
+	engine_audio_stream = unit.find_node("EngineAudioStream")
+	engine_audio_stream.playing = false
 	# Energy Charge Zone Signal / To charge ships in Zone
 	energy_charge_zone = unit.find_node("ChargerZone")
 	energy_charge_zone.connect("body_shape_entered", self, "_unit_entter_to_charge_zone")
@@ -62,15 +66,14 @@ func _process(delta):
 		# Spawn PlayerCharacter.unit on the MainShip.spawn_point
 		spawn_player_from_hub(player_character)
 		ship_hub.players_to_spawn.erase(player_character)
-	# TODO: Add movement by path
+	# Moving by path
 	unit.moving = false
 	if GameManager.current_point && GameManager.move_to_point:
 		# Get target point global position
 		var point_world_position = GameManager.move_to_point.pos * Difficult.get_difficult(Difficult.NORMAL).distance
 		# Calculate distance between target point and unit position
 		var dst = unit.position.distance_to(point_world_position)
-		
-		if dst > 300:
+		if dst > 500:
 			# Rotate from current point to point where unit will be go
 			var angle = point_world_position.angle_to_point(unit.position) + deg2rad(90)
 			unit.rotate_to(angle, unit.rotation_speed * Angles.degg2rad * delta)
@@ -80,13 +83,26 @@ func _process(delta):
 			unit.moving = true
 			unit.move_by_rotation()
 		else:
+			var lenght = unit.velocity.length()
+			unit.moving = lenght > 25
 			unit.velocity *= 0.98
-			if unit.velocity.length() < 1:
+			if not _slow_down_sound_played:
+				GameManager.play_sound(Res.engines_slow_down_vfx, global_position)
+				_slow_down_sound_played = true
+			if lenght < 10:
 				GameManager.current_point = GameManager.move_to_point
 				GameManager.move_to_point = null
 				ship_hub.path_map.update_points_color()
-				
-		
+				unit.velocity = Vector2.ZERO
+				_slow_down_sound_played = false
+	# Adjust Engine Audio Stream Player to Ship Movement
+	if unit.moving && engine_audio_stream.volume_db < 8:
+		engine_audio_stream.volume_db += 0.1
+		engine_audio_stream.play()
+	elif !unit.moving && engine_audio_stream.volume_db > 0:
+		engine_audio_stream.volume_db -= 0.1
+		if engine_audio_stream.volume_db < 0:
+			engine_audio_stream.stop()
 	# Iterate all units in charge zone and charge them;
 	for transfer_unit in _units_in_charge_zone:
 		# Charge Unit by 1%

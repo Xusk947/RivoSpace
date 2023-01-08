@@ -26,7 +26,6 @@ func _ready():
 		_engine_sprites.append(child)
 
 func _physics_process(delta):
-	GameManager.camera.position = global_position
 	_engine_scale = lerp(_engine_scale, _need_scale, 0.025)
 	if _engine_scale > 1.10:
 		_need_scale = 0.75
@@ -53,6 +52,8 @@ func _physics_process(delta):
 		_display_showed = true
 	elif dst > 600:
 		_display_showed = false
+	if ship_hub.unit_owner.moving:
+		GameManager.camera.position = global_position
 	# When unit close to him ship it's start disappearing animation
 	if position.distance_squared_to(zone.position) < 500:
 		if modulate.a > 0:

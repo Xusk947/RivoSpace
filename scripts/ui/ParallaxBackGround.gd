@@ -24,18 +24,18 @@ var _pos:Vector2
 var _stars:Array
 
 func _ready():
+	background.material = material
 	add_child(_get_parallax_layer(ArrayTools.select_random(stars), "SlowStars", slow_stars_scroll))
 	add_child(_get_parallax_layer(ArrayTools.select_random(dark_dust), "SecondStarDust", second_star_dust_scroll))
 	add_child(_get_parallax_layer(ArrayTools.select_random(dust), "StarDust", star_dust_scroll))
 	add_child(_get_parallax_layer(ArrayTools.select_random(stars), "SecondStars", second_stars_scroll))
 	add_child(_get_parallax_layer(ArrayTools.select_random(stars), "FastStars", fast_stars_scroll))
 
-func _get_parallax_layer(tex:Texture, name:String, move_scale:float, mirroring:int = 2048):
+func _get_parallax_layer(tex:Texture, name:String, move_scale:float, mirroring:int = 3073):
 	var parallax_layer = ParallaxLayer.new()
 	var sprite = Sprite.new()
 	sprite.texture = tex
 	sprite.centered = false
-	sprite.scale = Vector2(2, 2)
 	sprite.use_parent_material = true
 	parallax_layer.name = name
 	parallax_layer.material = material

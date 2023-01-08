@@ -14,7 +14,7 @@ const _level:Dictionary = {
 		distance = 3000
 	},
 	"NORMAL": {
-		distance = 3500
+		distance = 2500
 	},
 	"HARD": {
 		distance = 4000

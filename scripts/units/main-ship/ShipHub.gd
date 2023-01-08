@@ -57,7 +57,7 @@ func player_enter_to_hub(unit:Unit) -> bool:
 	unit.set_physics_process(false)
 	unit.modulate.a = 1
 	unit.velocity = Vector2.ZERO
-	GameManager.camera.set_target(player_character, 0.2)
+	GameManager.camera.set_target(player_character, 0.5)
 	# Hide All UI when player enttered to the ShipHub
 	if GameManager.scene_holder is GameScene:
 		var scene:GameScene = GameManager.scene_holder

@@ -48,6 +48,5 @@ amount = 16
 lifetime_randomness = 0.1
 fract_delta = false
 initial_velocity = 100.0
-scale_amount = 2.5
 scale_amount_curve = SubResource( 2 )
 color = Color( 0.705882, 0.12549, 0.164706, 1 )

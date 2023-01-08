@@ -4,5 +4,5 @@
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/opacity = 0.748
+shader_param/opacity = 0.0
 shader_param/color = Color( 0, 1, 0, 1 )

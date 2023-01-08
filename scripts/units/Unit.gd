@@ -98,7 +98,6 @@ func _physics_process(delta):
 	# When Unit is Hitted
 	if (hit_delay > 0):
 		self.hit_delay -= delta * 5
-
 # Abstract Void
 func _update_controller(_delta):
 	pass
@@ -184,7 +183,7 @@ func kill():
 	if controller:
 		controller.on_kill()
 	# Play death sound when unit die
-	GameManager.play_sound(ArrayTools.select_random(Res.unit_death_vfx))
+	GameManager.play_sound(ArrayTools.select_random(Res.unit_death_vfx), global_position, -10)
 	remove()
 
 func remove():

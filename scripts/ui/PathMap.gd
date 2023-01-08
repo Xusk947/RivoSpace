@@ -108,14 +108,19 @@ func _create_children_from_path():
 	update_points_color()
 
 func _button_down(point:PathSprite):
-	if point.point == GameManager.current_point:
-		print("Selected Point Equal to GameManager Current Point")
 	for con in point.point.connections:
-		print(con)
 		if con.pos == GameManager.current_point.pos:
-			print("This Point Connected to GameManager Current Point")
-			GameManager.move_to_point = point.point
-	
+			_select_point(point.point)
+			return
+	for con in GameManager.current_point.connections:
+		if con.pos == point.point.pos:
+			_select_point(point.point)
+			return
+
+func _select_point(point:PathPoint):
+	GameManager.move_to_point = point
+	GameManager.play_sound(Res.star_path_select_vfx, global_position, 1.25)
+
 func _mouse_entered(point:Sprite):
 	point.modulate.a = 0.5
 

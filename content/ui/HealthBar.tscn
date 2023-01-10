@@ -1,11 +1,73 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://sprites/uis/basic/basic-theme.tres" type="Theme" id=1]
 [ext_resource path="res://scripts/ui/HealthBar.gd" type="Script" id=2]
 
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.699219, 0.124958, 0.124958, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 0.188235, 0.0941176, 0.0941176, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.301961, 0.176471, 0.176471, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 0.188235, 0.0941176, 0.0941176, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 20
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.00784314, 0.00784314, 0.00784314, 0.454902 )
+border_width_left = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 0.188235, 0.0941176, 0.0941176, 1 )
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 0 )
+border_width_left = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 0.188235, 0.0941176, 0.0941176, 1 )
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
 [node name="HealthBar" type="ProgressBar"]
-margin_right = 144.0
-margin_bottom = 14.0
+anchor_right = 0.179
+anchor_bottom = 0.132
+margin_right = -0.296005
+margin_bottom = -0.199997
 theme = ExtResource( 1 )
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 2 )
+value = 50.0
 percent_visible = false
 script = ExtResource( 2 )
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+anchor_top = 0.734
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.0139961
+custom_styles/fg = SubResource( 4 )
+custom_styles/bg = SubResource( 5 )
+value = 50.0
+percent_visible = false

@@ -6,9 +6,11 @@ onready var canvas:CanvasLayer = $CanvasLayer
 # Color Rect | A slightly hide game objects on scene
 onready var  color_filler:ColorFiller = $CanvasLayer/ColorFiller
 # Control Node | says to player his health exp and etc..
-onready var game_control:Control = $CanvasLayer/Menu/MainContainer/GameControl
+onready var game_control:Control = $CanvasLayer/Menu/MainContainer/GameControll
 # Control Node | contains nodes when player choose new upgrade
-onready var upgrade_control:Control = $CanvasLayer/Menu/MainContainer/UpgradeControl
+onready var upgrade_control:Control = $CanvasLayer/Menu/MainContainer/UpgradeControll
+# Control Node | show settings menu
+onready var settings_control:Control = $CanvasLayer/Menu/MainContainer/Settings
 # Control Card Node | contains card auto placement node (aka) HBox/VBox 
 onready var card_holder:HBoxContainer = $CanvasLayer/Menu/MainContainer/UpgradeControl/CardsMargin/VBoxContainer/HBoxContainer
 # Background | ParallaxBackGround
@@ -94,6 +96,11 @@ func _process(_delta):
 	if _cards_to_select: return
 	# When EXP reach maximum level we level up and spawn cards, multiple max_expiriance by 1.2 
 	# DEBUG ONLY
+	if Input.is_action_just_pressed("escape"):
+		if settings_control.visible:
+			show_game_ui()
+		else:
+			show_settings()
 	if not game_control.visible: return
 	if Input.is_mouse_button_pressed(1):
 		var unit = _spawn_unit(get_global_mouse_position(), Res.sharp)
@@ -143,13 +150,22 @@ func show_game_ui():
 	game_control.visible = true
 	color_filler.need_hide = true
 	upgrade_control.visible = false
+	settings_control.visible = false
 # Show Cards Selection UI and Hide others
 func show_upgrade_ui():
 	game_control.visible = false
 	color_filler.need_hide = false
 	upgrade_control.visible = true
+	settings_control.visible = false
 
 func show_in_hub_ui():
-	game_control.visible = false
+	game_control.visible = true
 	color_filler.need_hide = true
 	upgrade_control.visible = false
+	settings_control.visible = false
+
+func show_settings():
+	game_control.visible = false
+	color_filler.need_hide = false
+	upgrade_control.visible = false
+	settings_control.visible = true

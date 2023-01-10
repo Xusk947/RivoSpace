@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/scenes/GameScene.gd" type="Script" id=1]
-[ext_resource path="res://content/ui/HealthBar.tscn" type="PackedScene" id=2]
-[ext_resource path="res://content/ui/EnergyBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://content/ui/GameControll.tscn" type="PackedScene" id=2]
+[ext_resource path="res://content/ui/UpgradeControll.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/ui/ColorFiller.gd" type="Script" id=4]
-[ext_resource path="res://sprites/uis/card/card-theme.tres" type="Theme" id=5]
-[ext_resource path="res://content/ui/RerollButton.tscn" type="PackedScene" id=6]
+[ext_resource path="res://content/ui/Settings.tscn" type="PackedScene" id=7]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource( 1 )
@@ -30,97 +29,22 @@ custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
 
-[node name="GameControl" type="Control" parent="CanvasLayer/Menu/MainContainer"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 1014.0
-margin_bottom = 590.0
-
-[node name="GameContainer" type="MarginContainer" parent="CanvasLayer/Menu/MainContainer/GameControl"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_constants/margin_right = 200
-custom_constants/margin_top = 30
-custom_constants/margin_left = 200
-custom_constants/margin_bottom = 450
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu/MainContainer/GameControl/GameContainer"]
-margin_left = 200.0
-margin_top = 30.0
-margin_right = 804.0
-margin_bottom = 130.0
-
-[node name="HealthBar" parent="CanvasLayer/Menu/MainContainer/GameControl/GameContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_right = 604.0
-margin_bottom = 48.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Menu/MainContainer/GameControl/GameContainer/VBoxContainer"]
-margin_top = 52.0
-margin_right = 604.0
-margin_bottom = 100.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/margin_right = 100
-custom_constants/margin_top = 5
-custom_constants/margin_left = 100
-custom_constants/margin_bottom = 15
-
-[node name="ExpBar" parent="CanvasLayer/Menu/MainContainer/GameControl/GameContainer/VBoxContainer/MarginContainer" instance=ExtResource( 3 )]
-margin_left = 100.0
-margin_top = 5.0
-margin_right = 504.0
-margin_bottom = 33.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="UpgradeControl" type="Control" parent="CanvasLayer/Menu/MainContainer"]
+[node name="GameControll" parent="CanvasLayer/Menu/MainContainer" instance=ExtResource( 2 )]
 visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 1014.0
 margin_bottom = 590.0
 
-[node name="CardsMargin" type="MarginContainer" parent="CanvasLayer/Menu/MainContainer/UpgradeControl"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_constants/margin_right = 60
-custom_constants/margin_top = 70
-custom_constants/margin_left = 60
-custom_constants/margin_bottom = 50
+[node name="UpgradeControll" parent="CanvasLayer/Menu/MainContainer" instance=ExtResource( 3 )]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu/MainContainer/UpgradeControl/CardsMargin"]
-margin_left = 60.0
-margin_top = 70.0
-margin_right = 944.0
-margin_bottom = 530.0
-custom_constants/separation = 25
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Menu/MainContainer/UpgradeControl/CardsMargin/VBoxContainer"]
-margin_right = 884.0
-margin_bottom = 368.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 25
-alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Menu/MainContainer/UpgradeControl/CardsMargin/VBoxContainer"]
-margin_top = 393.0
-margin_right = 884.0
-margin_bottom = 395.0
-size_flags_vertical = 4
-theme = ExtResource( 5 )
-custom_constants/separation = 2
-
-[node name="Button" parent="CanvasLayer/Menu/MainContainer/UpgradeControl/CardsMargin/VBoxContainer" instance=ExtResource( 6 )]
-margin_left = 374.0
-margin_top = 420.0
-margin_right = 509.0
-margin_bottom = 460.0
-size_flags_horizontal = 4
-size_flags_vertical = 0
-
-[node name="Options" type="Control" parent="CanvasLayer/Menu"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Settings" parent="CanvasLayer/Menu/MainContainer" instance=ExtResource( 7 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 590.0
